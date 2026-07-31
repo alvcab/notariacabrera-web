@@ -290,8 +290,9 @@ a {
 }
 
 .funciones-button {
-  display: inline-block;
-  margin-top: 1.5rem;
+  display: block;
+  width: fit-content;
+  margin-top: 2rem;
 }
 
 .section h3 + .links-grid,

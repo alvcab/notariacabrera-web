@@ -3,6 +3,16 @@
   padding: 2rem 0.75rem 4rem;
 }
 
+.article-page {
+  max-width: 900px;
+  padding: 3rem 2rem 2rem;
+}
+
+.article-page h1 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
 .back-link {
   color: var(--accent);
   font-size: 0.9rem;

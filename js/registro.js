@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (backLink) {
     backLink.addEventListener('click', (e) => {
       e.preventDefault();
+      window.open('', '_self');
       window.close();
       setTimeout(() => {
         window.location.href = 'index.html#recursos';

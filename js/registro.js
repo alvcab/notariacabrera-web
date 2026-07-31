@@ -36,7 +36,7 @@ const REGISTRO_CONFIG = {
   minero: {
     title: 'Registro de Índices Mineros',
     columns: [
-      { label: 'Fecha', get: r => r.fechadoc, sort: r => parseFechaChile(r.fechadoc) },
+      { label: 'Fecha', get: r => (r.fechadoc || '').split(' ')[0], sort: r => parseFechaChile(r.fechadoc) },
       { label: 'Registro', get: r => r.Registro, sort: r => (r.Registro || '').toLowerCase() },
       { label: 'Fojas', get: r => [r.Fojas, r.fojasdigito].filter(Boolean).join(' '), sort: r => parseNumero(r.Fojas) },
       { label: 'N° Repertorio', get: r => r.Repertorio, sort: r => parseNumero(r.Repertorio) },

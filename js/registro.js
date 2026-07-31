@@ -49,6 +49,17 @@ const REGISTRO_CONFIG = {
 const PAGE_SIZE = 50;
 
 document.addEventListener('DOMContentLoaded', async () => {
+  const backLink = document.getElementById('backLink');
+  if (backLink) {
+    backLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.close();
+      setTimeout(() => {
+        window.location.href = 'index.html#recursos';
+      }, 300);
+    });
+  }
+
   const params = new URLSearchParams(window.location.search);
   const tipo = params.get('tipo');
   const anio = params.get('anio');

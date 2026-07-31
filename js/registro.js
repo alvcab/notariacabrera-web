@@ -53,9 +53,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (backLink) {
     backLink.addEventListener('click', (e) => {
       e.preventDefault();
-      window.open('', '_self');
+      console.log('[backLink] click detected, history.length =', history.length);
       window.close();
+      console.log('[backLink] window.close() called, still here =', !window.closed);
       setTimeout(() => {
+        console.log('[backLink] fallback firing, navigating back');
         window.location.href = 'index.html#recursos';
       }, 300);
     });

@@ -30,7 +30,7 @@ a {
 }
 
 .container {
-  max-width: 1100px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
@@ -49,12 +49,24 @@ a {
   align-items: center;
   justify-content: space-between;
   height: 70px;
+  padding-left: 1.5rem;
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 1.25rem;
   font-weight: 600;
   letter-spacing: 0.5px;
+}
+
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  padding: 2px;
 }
 
 .main-nav {
@@ -99,7 +111,7 @@ a {
 
 /* Main */
 .hero {
-  padding: 5rem 1.5rem;
+  padding: 2.5rem 1.5rem;
   text-align: center;
 }
 
@@ -110,23 +122,21 @@ a {
 
 .hero p {
   color: var(--text-muted);
-}
-
-.hero .subtitle {
-  color: var(--accent);
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.9rem;
 }
 
 /* Sections */
 .section {
-  padding: 4rem 1.5rem;
+  padding: 1rem 1.5rem;
   border-top: 1px solid var(--border);
 }
 
 .section h2 {
   font-size: 1.75rem;
   margin-bottom: 1.5rem;
+  display: inline-block;
+  padding-bottom: 0.4rem;
+  border-bottom: 3px solid var(--accent);
 }
 
 .section h3 {
@@ -139,10 +149,24 @@ a {
   color: var(--text-muted);
 }
 
+.bio-text {
+  font-size: 1.15rem;
+  margin-top: 0.75rem;
+}
+
+.underlined-title {
+  margin-top: 1.5rem;
+}
+
 .note {
   margin-top: 1.5rem;
   font-size: 0.875rem;
   font-style: italic;
+}
+
+.note-highlight {
+  font-size: 1.75rem;
+  text-align: center;
 }
 
 /* Info & card grids */
@@ -204,6 +228,36 @@ a {
 }
 
 .resource-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.section h3 + .links-grid,
+.section h3 + .year-links {
+  margin-top: 0.75rem;
+}
+
+.links-grid + h3,
+.year-links + h3 {
+  margin-top: 2rem;
+}
+
+.year-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.year-links a {
+  background-color: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.year-links a:hover {
   border-color: var(--accent);
   color: var(--accent);
 }

@@ -127,7 +127,16 @@ a {
 
 /* Sections */
 .section {
+  position: relative;
   padding: 1rem 1.5rem;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 1.5rem;
+  right: 1.5rem;
   border-top: 1px solid var(--border);
 }
 
@@ -190,6 +199,11 @@ a {
   text-decoration: underline;
 }
 
+.contact-link {
+  color: #4a9eff;
+  text-decoration: underline;
+}
+
 /* Info & card grids */
 .info-grid,
 .cards-grid {
@@ -205,6 +219,10 @@ a {
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 1.5rem;
+}
+
+.bio-card {
+  margin-top: 1.5rem;
 }
 
 /* Function list */
@@ -229,6 +247,24 @@ a {
 .staff-list li::before {
   content: "— ";
   color: var(--accent);
+}
+
+.staff-list--stacked {
+  display: block;
+  margin-bottom: 0;
+}
+
+.staff-list--stacked li {
+  margin-bottom: 0.5rem;
+}
+
+.staff-list--stacked li:last-child {
+  margin-bottom: 0;
+}
+
+.staff-role {
+  font-size: 0.85rem;
+  opacity: 0.8;
 }
 
 /* Resource links */

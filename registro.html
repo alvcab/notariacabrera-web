@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Índices — Segunda Notaría Pública de Ovalle</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/registro.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.png" alt="" class="logo-icon">
+        Notaría Cabrera
+      </a>
+    </div>
+  </header>
+
+  <main class="container registro-page">
+    <a href="index.html#recursos" class="back-link">&larr; Volver a Recursos</a>
+    <h1 id="registroTitle">Registro</h1>
+    <p id="registroCount" class="registro-count"></p>
+
+    <input type="text" id="registroSearch" class="registro-search" placeholder="Buscar por nombre, materia, repertorio...">
+
+    <div class="registro-table-wrap">
+      <table id="registroTable" class="registro-table">
+        <thead><tr id="registroHead"></tr></thead>
+        <tbody id="registroBody"></tbody>
+      </table>
+    </div>
+
+    <div class="registro-pager">
+      <button id="prevPage" type="button">&laquo; Anterior</button>
+      <span id="pageInfo"></span>
+      <button id="nextPage" type="button">Siguiente &raquo;</button>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> Segunda Notaría Pública y Conservador de Minas de Ovalle. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script src="js/registro.js"></script>
+</body>
+</html>

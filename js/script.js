@@ -2,10 +2,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const navToggle = document.getElementById('navToggle');
   const navList = document.getElementById('navList');
 
-  navToggle.addEventListener('click', () => {
-    const isOpen = navList.classList.toggle('open');
-    navToggle.setAttribute('aria-expanded', isOpen);
-  });
+  if (navToggle && navList) {
+    navToggle.addEventListener('click', () => {
+      const isOpen = navList.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', isOpen);
+    });
+  }
 
-  document.getElementById('year').textContent = new Date().getFullYear();
+  const yearEl = document.getElementById('year');
+  if (yearEl) {
+    yearEl.textContent = new Date().getFullYear();
+  }
 });

@@ -13,4 +13,15 @@ document.addEventListener('DOMContentLoaded', () => {
   if (yearEl) {
     yearEl.textContent = new Date().getFullYear();
   }
+
+  document.querySelectorAll('.back-link[data-close-tab]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const fallbackHref = link.getAttribute('href');
+      window.close();
+      setTimeout(() => {
+        window.location.href = fallbackHref;
+      }, 300);
+    });
+  });
 });

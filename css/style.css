@@ -281,6 +281,10 @@ a {
   border-radius: 8px;
   padding: 0.9rem 1.1rem;
   font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   transition: border-color 0.2s ease, color 0.2s ease;
 }
 
@@ -293,6 +297,13 @@ a {
   display: block;
   width: fit-content;
   margin-top: 2rem;
+}
+
+.descubrimientos-button {
+  display: block;
+  width: fit-content;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .section h3 + .links-grid,

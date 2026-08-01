@@ -31,6 +31,13 @@
   margin-bottom: 1.5rem;
 }
 
+.registro-page h2 {
+  font-size: 1.3rem;
+  color: var(--accent);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
 .registro-search {
   width: 100%;
   max-width: 420px;

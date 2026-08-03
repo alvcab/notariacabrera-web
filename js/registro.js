@@ -5,28 +5,11 @@ function parseNumero(str) {
   return parseFloat(String(str).replace(/\./g, '').replace(',', '.')) || 0;
 }
 
-function parseFechaChile(str) {
-  if (!str) return 0;
-  const [datePart, timePart, ampm] = String(str).split(' ');
-  const [d, m, y] = datePart.split('/').map(Number);
-  if (!d || !m || !y) return 0;
-  let hh = 0, mm = 0;
-  if (timePart) {
-    const parts = timePart.split(':').map(Number);
-    hh = parts[0] || 0;
-    mm = parts[1] || 0;
-    if (ampm && ampm.toUpperCase() === 'PM' && hh < 12) hh += 12;
-    if (ampm && ampm.toUpperCase() === 'AM' && hh === 12) hh = 0;
-  }
-  return new Date(y, m - 1, d, hh, mm).getTime();
-}
-
 const REGISTRO_CONFIG = {
   publicos: {
     title: 'Registro de Índices de Instrumentos Públicos',
     columns: [
-      { label: 'N° Repertorio', get: r => r.numero, sort: r => parseNumero(r.numero) },
-      { label: 'Fecha Índice', get: r => r.fechaindice, sort: r => parseFechaChile(r.fechaindice) },
+      { label: 'N° Repertorio', get: r => String(r.numero || '').replace(/\./g, ''), sort: r => parseNumero(r.numero) },
       { label: 'Bimestre', get: r => r.bimestre, sort: r => BIMESTRE_ORDER[r.bimestre] || 0 },
       { label: 'Materia', get: r => r.Materia, sort: r => (r.Materia || '').toLowerCase() },
       { label: 'Otorgante 1', get: r => [r.nom1, r.appaterno1, r.apmaterno1].filter(Boolean).join(' '), sort: r => (r.appaterno1 || '').toLowerCase() },
@@ -36,10 +19,9 @@ const REGISTRO_CONFIG = {
   minero: {
     title: 'Registro de Índices Mineros',
     columns: [
-      { label: 'Fecha', get: r => (r.fechadoc || '').split(' ')[0], sort: r => parseFechaChile(r.fechadoc) },
-      { label: 'Registro', get: r => r.Registro, sort: r => (r.Registro || '').toLowerCase() },
       { label: 'Fojas', get: r => [r.Fojas, r.fojasdigito].filter(Boolean).join(' '), sort: r => parseNumero(r.Fojas) },
       { label: 'N° Repertorio', get: r => r.Repertorio, sort: r => parseNumero(r.Repertorio) },
+      { label: 'Registro', get: r => r.Registro, sort: r => (r.Registro || '').toLowerCase() },
       { label: 'Nombre', get: r => r.Nombre, sort: r => (r.Nombre || '').toLowerCase() },
       { label: 'Materia', get: r => r.Materia, sort: r => (r.Materia || '').toLowerCase() },
     ],
@@ -110,8 +92,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
+  const DEFAULT_SORT_OVERRIDES = {
+    'publicos-2022': 'Bimestre',
+  };
+  const defaultSortLabel = DEFAULT_SORT_OVERRIDES[`${tipo}-${anio}`] || 'N° Repertorio';
+
   filteredRows = allRows;
-  sortIndex = config.columns.findIndex(col => col.label === 'N° Repertorio');
+  sortIndex = config.columns.findIndex(col => col.label === defaultSortLabel);
   sortDir = 1;
 
   function applySortAndRender() {

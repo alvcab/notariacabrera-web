@@ -329,6 +329,12 @@ a {
   color: var(--accent);
 }
 
+.year-links a.year-active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background-color: var(--bg);
+}
+
 /* Footer */
 .site-footer {
   border-top: 1px solid var(--border);

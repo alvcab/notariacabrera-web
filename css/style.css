@@ -299,13 +299,6 @@ a {
   margin-top: 2rem;
 }
 
-.descubrimientos-button {
-  display: block;
-  width: fit-content;
-  margin-top: 1.5rem;
-  margin-bottom: 2rem;
-}
-
 .section h3 + .links-grid,
 .section h3 + .year-links {
   margin-top: 0.75rem;

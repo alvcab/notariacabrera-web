@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Informes de Fiscalización — Segunda Notaría Pública de Ovalle</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/registro.css">
+  <style>
+    .pdf-frame {
+      width: 100%;
+      height: 80vh;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-top: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.png" alt="" class="logo-icon">
+        Notaría Cabrera
+      </a>
+    </div>
+  </header>
+
+  <main class="container article-page">
+    <a href="index.html#recursos" class="back-link" data-close-tab>&larr; Volver a Recursos y Transparencia</a>
+    <h1>Informes de Fiscalización</h1>
+    <embed src="assets/documents/informe-fiscalizacion.pdf" type="application/pdf" class="pdf-frame">
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> Segunda Notaría Pública y Conservador de Minas de Ovalle. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

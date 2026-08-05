@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   filteredRows = allRows;
   sortIndex = config.columns.findIndex(col => col.label === defaultSortLabel);
-  sortDir = 1;
+  sortDir = -1;
 
   function applySortAndRender() {
     if (sortIndex !== null) {

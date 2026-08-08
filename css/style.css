@@ -125,6 +125,37 @@ a {
   font-size: 1.9rem;
 }
 
+/* Map */
+.map-section {
+  height: 400px;
+}
+
+#mapa-ubicacion {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background-color: #f0efe9;
+}
+
+.map-marker {
+  width: 16px;
+  height: 16px;
+  background-color: var(--accent);
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+  animation: map-marker-blink 2.8s ease-in-out infinite;
+}
+
+@keyframes map-marker-blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
 /* Sections */
 .section {
   position: relative;

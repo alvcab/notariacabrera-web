@@ -256,6 +256,10 @@ a {
   margin-top: 1.5rem;
 }
 
+.card--compact {
+  padding: 0.75rem 1.5rem;
+}
+
 /* Function list */
 .function-list {
   margin-top: 1.5rem;
@@ -331,12 +335,14 @@ a {
 }
 
 .section h3 + .links-grid,
-.section h3 + .year-links {
+.section h3 + .year-links,
+.section h3 + .card {
   margin-top: 0.75rem;
 }
 
 .links-grid + h3,
-.year-links + h3 {
+.year-links + h3,
+.card + h3 {
   margin-top: 2rem;
 }
 

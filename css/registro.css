@@ -122,11 +122,6 @@
   white-space: normal;
 }
 
-.registro-table td.col-monto,
-.registro-table th.col-monto {
-  text-align: right;
-}
-
 .registro-table tbody tr:hover {
   background-color: var(--bg-alt);
 }

@@ -126,6 +126,10 @@
   background-color: var(--bg-alt);
 }
 
+.registro-table td.col-monto {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
 .registro-pager {
   display: flex;
   align-items: center;

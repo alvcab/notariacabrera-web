@@ -15,6 +15,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* El header es sticky (70px): deja espacio para que los títulos no queden tapados al usar el menú */
+  scroll-padding-top: 80px;
 }
 
 body {
@@ -127,7 +129,13 @@ a {
 
 /* Map */
 .map-section {
-  height: 400px;
+  height: 560px;
+}
+
+@media (max-width: 768px) {
+  .map-section {
+    height: 420px;
+  }
 }
 
 #mapa-ubicacion {
@@ -137,14 +145,18 @@ a {
   background-color: #f0efe9;
 }
 
+/* OpenStreetMap viene a color: en gris queda sobrio, como el mapa anterior (el punto verde sigue a color) */
+#mapa-ubicacion .leaflet-tile-pane {
+  filter: grayscale(1) contrast(0.9) brightness(1.05);
+}
+
 .map-marker {
-  width: 16px;
-  height: 16px;
+  width: 22px;
+  height: 22px;
   background-color: var(--accent);
   border: 3px solid #ffffff;
   border-radius: 50%;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
-  animation: map-marker-blink 2.8s ease-in-out infinite;
+  animation: map-marker-blink 1s ease-in-out infinite;
 }
 
 @keyframes map-marker-blink {
@@ -233,6 +245,31 @@ a {
 .contact-link {
   color: #4a9eff;
   text-decoration: underline;
+}
+
+/* Botón "Cómo llegar": abre la ruta en Google Maps (en el celular, la app) */
+.directions-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.9rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.directions-link::after {
+  content: "→";
+}
+
+.directions-link:hover {
+  background-color: var(--accent);
+  color: #0d0d0d;
 }
 
 /* Info & card grids */
@@ -415,5 +452,48 @@ a {
 
   .year-links {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Aparición suave al bajar (solo en la página de inicio, ver js/script.js).
+   html.reveal la agrega el <head> de index.html; si el script no corre,
+   el mismo <head> la quita y todo se ve normal. */
+html.reveal :is(
+  .hero > *,
+  .section > h2,
+  .section > h3,
+  .section > p,
+  .section > .card,
+  .section > .complaints-box,
+  .section > .links-grid,
+  .section > .resource-link,
+  .info-grid > *,
+  .cards-grid > *,
+  .map-section
+) {
+  /* Conserva las transiciones de hover que ya tenían los links */
+  transition: opacity 1.6s cubic-bezier(0.25, 0.1, 0.25, 1), border-color 0.2s ease, color 0.2s ease;
+}
+
+/* Ocultos hasta que js/script.js les pone .is-in al entrar en pantalla */
+html.reveal :is(
+  .hero > *,
+  .section > h2,
+  .section > h3,
+  .section > p,
+  .section > .card,
+  .section > .complaints-box,
+  .section > .links-grid,
+  .section > .resource-link,
+  .info-grid > *,
+  .cards-grid > *,
+  .map-section
+):not(.is-in) {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }

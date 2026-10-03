@@ -10,7 +10,17 @@
   <meta property="og:type" content="website">
   <link rel="icon" type="image/png" href="assets/logo.png">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=8">
+  <script>
+    // Oculta las secciones antes del primer pintado para que aparezcan con fundido al bajar.
+    // Si js/script.js no llega a correr, a los 2,5 s se muestran normal.
+    if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('reveal');
+      setTimeout(function () {
+        if (!window.__revealOK) document.documentElement.classList.remove('reveal');
+      }, 2500);
+    }
+  </script>
 </head>
 <body>
   <header class="site-header">
@@ -49,6 +59,7 @@
         <div class="info-card">
           <h3>Dirección</h3>
           <p>Miguel Aguirre Perry Nº 328, centro de Ovalle, Región de Coquimbo</p>
+          <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Segunda+Notar%C3%ADa+de+Ovalle%2C+Miguel+Aguirre+328%2C+Ovalle%2C+Chile" target="_blank" rel="noopener" class="directions-link">Cómo llegar</a>
         </div>
         <div class="info-card">
           <h3>Horario de Atención</h3>
@@ -201,6 +212,7 @@
         <div class="info-card">
           <h3>Dirección</h3>
           <p>Miguel Aguirre Perry Nº 328, centro de Ovalle, Región de Coquimbo</p>
+          <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Segunda+Notar%C3%ADa+de+Ovalle%2C+Miguel+Aguirre+328%2C+Ovalle%2C+Chile" target="_blank" rel="noopener" class="directions-link">Cómo llegar</a>
         </div>
         <div class="info-card">
           <h3>Teléfono</h3>
@@ -221,6 +233,6 @@
   </footer>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="js/script.js"></script>
+  <script src="js/script.js?v=10"></script>
 </body>
 </html>

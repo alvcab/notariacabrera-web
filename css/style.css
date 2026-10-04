@@ -1018,8 +1018,8 @@ html[data-tema="alternado"] #mapa-ubicacion {
 }
 
 /* Variables de color registradas para poder animarlas (cambio suave crema ↔ verde en el inicio) */
-@property --c-borde { syntax: '<color>'; inherits: true; initial-value: #4a6150; }
-@property --c-centro { syntax: '<color>'; inherits: true; initial-value: #4a6150; }
+@property --c-borde { syntax: '<color>'; inherits: true; initial-value: #1c2c21; }
+@property --c-centro { syntax: '<color>'; inherits: true; initial-value: #1c2c21; }
 @property --bg { syntax: '<color>'; inherits: true; initial-value: #0d0d0d; }
 @property --bg-alt { syntax: '<color>'; inherits: true; initial-value: #171a17; }
 @property --text { syntax: '<color>'; inherits: true; initial-value: #f2f2f2; }
@@ -1034,13 +1034,13 @@ html[data-tema="alternado"] #mapa-ubicacion {
 
 /* Todas las secciones toman la base crema de la página (anula los colores fijos de las franjas) */
 html.oscurece :is(#ubicacion, .map-section, #servicios, #funciones, #nosotros, #recursos, #contacto, .site-footer) {
-  /* Tono inicial de las secciones: "abeto" (#4a6150), un verde apenas más claro que el verde bosque */
-  --bg: #4a6150;
-  --bg-alt: #586e5e;
+  /* Tono inicial de las secciones: "casi bosque" (#1c2c21), un verde apenas más claro que el verde bosque */
+  --bg: #1c2c21;
+  --bg-alt: #2c3b31;
   --text: #f5f2ec;
-  --text-muted: #c2c6bd;
+  --text-muted: #b4b7af;
   --accent: #9fdca5;
-  --border: #6b7d70;
+  --border: #404e45;
   --on-accent: #14201a;
   --link: #6cb8ff;
   --shadow: rgba(0, 0, 0, 0.4);
@@ -1051,8 +1051,8 @@ html.oscurece :is(#ubicacion, .map-section, #servicios, #funciones, #nosotros, #
   /* Fondo: degradado radial cuyo color de orillas (--c-borde) y de centro (--c-centro) se animan
      por separado: al pasar a verde cambian primero las orillas y luego el centro, y la animación
      siempre termina, así que nunca queda un halo crema. */
-  --c-borde: #4a6150;
-  --c-centro: #4a6150;
+  --c-borde: #1c2c21;
+  --c-centro: #1c2c21;
   background-image: radial-gradient(ellipse closest-side at 50% 50%, var(--c-centro) 0%, var(--c-borde) 100%);
   box-shadow: 0 0 0 100vmax var(--c-borde);
   /* De vuelta al tono inicial: el centro se aclara primero y las orillas lo siguen */

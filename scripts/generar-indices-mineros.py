@@ -60,7 +60,7 @@ for archivo, anio in zip(archivos, anios):
                    f"{len(registros)} inscripciones de descubrimientos, propiedad, accionistas, hipotecas y prohibiciones.")
 
     pagina = f"""<!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-tema="alternado">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -68,8 +68,8 @@ for archivo, anio in zip(archivos, anios):
   <meta name="description" content="{html.escape(descripcion, quote=True)}">
   <link rel="canonical" href="{url}">
   <link rel="icon" type="image/png" href="assets/logo.png">
-  <link rel="stylesheet" href="css/style.css?v=29">
-  <link rel="stylesheet" href="css/registro.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=39">
+  <link rel="stylesheet" href="css/registro.css?v=7">
 </head>
 <body>
   <!-- Página generada por scripts/generar-indices-mineros.py desde {archivo}. No editar a mano. -->
@@ -106,7 +106,7 @@ for archivo, anio in zip(archivos, anios):
     </div>
   </footer>
 
-  <script src="js/script.js?v=25"></script>
+  <script src="js/script.js?v=34"></script>
 </body>
 </html>
 """

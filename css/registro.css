@@ -153,7 +153,7 @@
 }
 
 .registro-table th.sortable:hover {
-  color: #ffffff;
+  color: var(--text);
 }
 
 .registro-table td.col-materia,

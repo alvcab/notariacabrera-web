@@ -1,3 +1,38 @@
+// Página de inicio: todo parte negro y cada franja crema cambia sola según el scroll.
+//   - Bajando: la franja se enciende (crema) cuando su borde superior sube del 65 % de la pantalla.
+//   - Subiendo: la franja se apaga (negro) apenas su borde superior baja del 15 % de la pantalla,
+//     o sea, en cuanto empiezas a salir de ella hacia arriba. Así se ve cómo se oscurece al subir.
+//   - Arriba del todo, todo negro.
+(function franjasCrema() {
+  const root = document.documentElement;
+  if (!root.classList.contains('franjas')) return;
+  // Ubicación y el mapa forman una sola franja: cambian juntos
+  const grupos = [['#ubicacion', '.map-section'], ['#funciones'], ['#recursos']]
+    .map((sel) => sel.map((s) => document.querySelector(s)).filter(Boolean))
+    .filter((g) => g.length);
+  let ultimoY = window.scrollY;
+
+  const revisar = () => {
+    const y = window.scrollY;
+    const subiendo = y < ultimoY;
+    ultimoY = y;
+    const alto = window.innerHeight;
+    grupos.forEach((grupo) => {
+      const top = grupo[0].getBoundingClientRect().top;
+      let encendida = grupo[0].classList.contains('crema');
+      if (y <= 40) encendida = false;
+      else if (subiendo) { if (top > alto * 0.15) encendida = false; }
+      else encendida = top < alto * 0.65;
+      grupo.forEach((el) => el.classList.toggle('crema', encendida));
+    });
+  };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', revisar);
+  else revisar();
+  window.addEventListener('scroll', revisar, { passive: true });
+  window.addEventListener('resize', revisar);
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
   const navToggle = document.getElementById('navToggle');
   const navList = document.getElementById('navList');

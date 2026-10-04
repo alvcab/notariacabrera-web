@@ -5,7 +5,14 @@
   --text-muted: #a8a8a8;
   --accent: #4caf50;
   --border: #2a2e2a;
+  --on-accent: #0d0d0d;           /* texto sobre fondo verde */
+  --link: #4a9eff;                /* teléfono y correo */
+  --header-glass: rgba(23, 26, 23, 0.72);
+  --shadow: rgba(0, 0, 0, 0.35);
+  --accent-soft: rgba(76, 175, 80, 0.12);
+  --accent-line: rgba(76, 175, 80, 0.45);
 }
+
 
 * {
   margin: 0;
@@ -139,7 +146,7 @@ a {
   padding: 0.4rem 0.9rem;
   border: 1px solid var(--accent);
   border-radius: 999px;
-  background-color: rgba(76, 175, 80, 0.12);
+  background-color: var(--accent-soft);
   color: var(--text);
   font-size: 0.9rem;
   font-weight: 600;
@@ -314,7 +321,7 @@ a {
 }
 
 .contact-link {
-  color: #4a9eff;
+  color: var(--link);
   text-decoration: underline;
 }
 
@@ -340,7 +347,7 @@ a {
 
 .directions-link:hover {
   background-color: var(--accent);
-  color: #0d0d0d;
+  color: var(--on-accent);
 }
 
 /* Info & card grids */
@@ -512,7 +519,7 @@ a {
 .indice-anio.actual {
   border-color: var(--accent);
   background-color: var(--accent);
-  color: #0d0d0d;
+  color: var(--on-accent);
   font-weight: 600;
 }
 
@@ -824,7 +831,7 @@ html.reveal .hero > :nth-child(2) {
 /* 1. Barra de arriba translúcida: el contenido se ve difuminado detrás al bajar */
 @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
   .site-header {
-    background-color: rgba(23, 26, 23, 0.72);
+    background-color: var(--header-glass);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     backdrop-filter: saturate(180%) blur(20px);
   }
@@ -840,8 +847,8 @@ html.reveal .hero > :nth-child(2) {
 .card:not(.card--compact):hover,
 .accordion details:hover {
   transform: translateY(-4px) scale(1.05);
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
-  border-color: rgba(76, 175, 80, 0.45);
+  box-shadow: 0 14px 34px var(--shadow);
+  border-color: var(--accent-line);
 }
 
 /* Los desplegables de trámites ocupan todo el ancho: crecen menos para no salirse de los márgenes */
@@ -862,7 +869,7 @@ html.reveal .hero > :nth-child(2) {
 .directions-link:hover,
 .indice-anio:hover {
   transform: translateY(-2px) scale(1.07);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 10px 24px var(--shadow);
 }
 
 .resource-link,
@@ -910,5 +917,145 @@ html.reveal .map-section:not(.is-in) {
   .directions-link:hover,
   .indice-anio:hover {
     transform: none;
+  }
+}
+
+/* ── Diseño de franjas alternadas, negras y crema, como apple.com ──
+   Se activa con data-tema="alternado" en <html> (todas las páginas). */
+
+/* Base clara (franjas claras): crema #f1e9da, con texto café muy oscuro */
+html[data-tema="alternado"] {
+  --bg: #f1e9da;
+  --bg-alt: #f9f5ec;
+  --text: #2a2620;
+  --text-muted: #6f685c;
+  --accent: #2e7d32;
+  --border: #dfd4c0;
+  --on-accent: #ffffff;
+  --link: #0066cc;
+  --header-glass: rgba(22, 22, 23, 0.8);
+  --shadow: rgba(60, 45, 20, 0.14);
+  --accent-soft: rgba(46, 125, 50, 0.1);
+  --accent-line: rgba(46, 125, 50, 0.45);
+}
+
+/* Franjas negras: las variables se redefinen solo dentro de estas secciones.
+   El título principal parte en negro y desde ahí se alterna; la barra de arriba también es negra. */
+html[data-tema="alternado"] :is(.site-header, #inicio, #servicios, #nosotros, #contacto) {
+  --header-glass: rgba(22, 22, 23, 0.8);
+  --bg: #000000;
+  --bg-alt: #1d1d1f;
+  --text: #f5f5f7;
+  --text-muted: #a1a1a6;
+  --accent: #4caf50;
+  --border: #333336;
+  --on-accent: #000000;
+  --link: #2997ff;
+  --shadow: rgba(0, 0, 0, 0.5);
+  --accent-soft: rgba(76, 175, 80, 0.12);
+  --accent-line: rgba(76, 175, 80, 0.45);
+  color: var(--text);
+}
+
+/* Cada franja ocupa todo el ancho de la pantalla, aunque el contenido siga centrado */
+html[data-tema="alternado"] :is(.hero, .section, .map-section) {
+  color: var(--text);
+  background-color: var(--bg);
+  box-shadow: 0 0 0 100vmax var(--bg);
+  clip-path: inset(0 -100vmax);
+}
+
+/* Más aire arriba y abajo de cada franja, y sin la línea divisoria entre secciones */
+html[data-tema="alternado"] .section {
+  padding-block: 4.5rem;
+}
+
+html[data-tema="alternado"] .hero {
+  padding-block: 5rem 4.5rem;
+}
+
+html[data-tema="alternado"] .section::before {
+  display: none;
+}
+
+/* El mapa queda dentro de la franja de Ubicación, con margen abajo */
+html[data-tema="alternado"] #ubicacion {
+  padding-bottom: 2.5rem;
+}
+
+html[data-tema="alternado"] .map-section {
+  height: auto;
+  padding-bottom: 4.5rem;
+}
+
+html[data-tema="alternado"] #mapa-ubicacion {
+  height: 560px;
+}
+
+@media (max-width: 768px) {
+  html[data-tema="alternado"] #mapa-ubicacion {
+    height: 420px;
+  }
+
+  html[data-tema="alternado"] .section {
+    padding-block: 3rem;
+  }
+}
+
+/* Página de inicio (html.franjas): todo parte negro y cada franja crema se enciende sola
+   según dónde esté en la pantalla (js/script.js le pone o quita la clase "crema").
+   Las variables de color se registran para que el cambio sea una transición suave. */
+@property --bg { syntax: '<color>'; inherits: true; initial-value: #0d0d0d; }
+@property --bg-alt { syntax: '<color>'; inherits: true; initial-value: #171a17; }
+@property --text { syntax: '<color>'; inherits: true; initial-value: #f2f2f2; }
+@property --text-muted { syntax: '<color>'; inherits: true; initial-value: #a8a8a8; }
+@property --accent { syntax: '<color>'; inherits: true; initial-value: #4caf50; }
+@property --border { syntax: '<color>'; inherits: true; initial-value: #2a2e2a; }
+
+/* Base negra en el inicio (incluye franjas crema apagadas y pie de página) */
+html[data-tema="alternado"].franjas {
+  --bg: #000000;
+  --bg-alt: #1d1d1f;
+  --text: #f5f5f7;
+  --text-muted: #a1a1a6;
+  --accent: #4caf50;
+  --border: #333336;
+  --on-accent: #000000;
+  --link: #2997ff;
+  --shadow: rgba(0, 0, 0, 0.5);
+  --accent-soft: rgba(76, 175, 80, 0.12);
+  --accent-line: rgba(76, 175, 80, 0.45);
+}
+
+html[data-tema="alternado"].franjas :is(#ubicacion, .map-section, #funciones, #recursos) {
+  /* Cada franja usa su propio color de texto (si no, hereda el blanco de la página negra) */
+  color: var(--text);
+  transition: --bg 0.9s ease, --bg-alt 0.9s ease, --text 0.9s ease, --text-muted 0.9s ease,
+    --accent 0.9s ease, --border 0.9s ease;
+}
+
+/* Evita una línea fina entre la franja de Ubicación y el mapa */
+html[data-tema="alternado"].franjas .map-section {
+  margin-top: -1px;
+}
+
+/* Franja crema encendida */
+html[data-tema="alternado"].franjas :is(#ubicacion, .map-section, #funciones, #recursos).crema {
+  --bg: #f1e9da;
+  --bg-alt: #f9f5ec;
+  --text: #2a2620;
+  --text-muted: #6f685c;
+  --accent: #2e7d32;
+  --border: #dfd4c0;
+  --on-accent: #ffffff;
+  --link: #0066cc;
+  --shadow: rgba(60, 45, 20, 0.14);
+  --accent-soft: rgba(46, 125, 50, 0.1);
+  --accent-line: rgba(46, 125, 50, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-tema="alternado"].franjas :is(#ubicacion, .map-section, #funciones, #recursos) {
+    transition: none;
   }
 }

@@ -57,9 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
       '.map-section',
     ].join(','));
 
-    // Lo que ya está en pantalla al abrir la página espera 2 s (mientras baja el título);
+    // Lo que ya está en pantalla al abrir la página espera 1,5 s (mientras baja el título);
     // lo que aparece después al hacer scroll empieza de inmediato.
-    let initialWait = 2;
+    let initialWait = 1.5;
 
     const observer = new IntersectionObserver((entries) => {
       const entering = entries.filter((entry) => entry.isIntersecting);

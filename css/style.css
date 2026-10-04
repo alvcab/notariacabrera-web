@@ -439,6 +439,47 @@ a {
   color: var(--accent);
 }
 
+/* Páginas por trámite (transferencia-de-vehiculos.html, etc.) */
+.tramite-texto {
+  color: var(--text-muted);
+}
+
+.tramite-texto ul,
+.tramite-texto ol {
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.tramite-contacto {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  background-color: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.tramite-contacto h2 {
+  margin-top: 0 !important;
+}
+
+.tramite-contacto p {
+  color: var(--text-muted);
+}
+
+.tramite-botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.accordion .ver-mas {
+  display: inline-block;
+  color: var(--accent);
+  font-weight: 600;
+}
+
 /* Staff list */
 .staff-list {
   list-style: none;

@@ -52,6 +52,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   titleEl.textContent = `${config.title} — ${anio}`;
+
+  // Índices mineros: enlace a la versión en texto del año (indice-minero-AAAA.html), que es la que lee Google
+  if (tipo === 'minero') {
+    const texto = document.createElement('a');
+    texto.href = `indice-minero-${anio}.html`;
+    texto.className = 'registro-texto-link';
+    texto.textContent = 'Ver índice en texto';
+    countEl.after(texto);
+  }
   document.title = `${config.title} ${anio} — Segunda Notaría Pública de Ovalle`;
 
   let sortIndex = null;

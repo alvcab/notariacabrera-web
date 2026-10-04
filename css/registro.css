@@ -67,6 +67,18 @@
   font-size: 0.95rem;
 }
 
+.registro-texto-link {
+  display: inline-block;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-decoration: underline;
+}
+
+.registro-texto-link:hover {
+  color: var(--accent);
+}
+
 .registro-search-wrap {
   position: relative;
   max-width: 420px;

@@ -515,21 +515,6 @@ a {
   min-width: 14rem;
 }
 
-.indices-texto {
-  margin-top: 0.9rem;
-  font-size: 1rem;
-  color: var(--text-muted);
-}
-
-/* Mantiene el espacio que antes daba ".card + h3" al título siguiente */
-.indices-texto + h3 {
-  margin-top: 2rem;
-}
-
-.indices-texto a {
-  color: var(--accent);
-}
-
 /* Staff list */
 .staff-list {
   list-style: none;

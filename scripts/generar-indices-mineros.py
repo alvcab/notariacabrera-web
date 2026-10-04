@@ -68,7 +68,7 @@ for archivo, anio in zip(archivos, anios):
   <meta name="description" content="{html.escape(descripcion, quote=True)}">
   <link rel="canonical" href="{url}">
   <link rel="icon" type="image/png" href="assets/logo.png">
-  <link rel="stylesheet" href="css/style.css?v=73">
+  <link rel="stylesheet" href="css/style.css?v=77">
   <link rel="stylesheet" href="css/registro.css?v=7">
 </head>
 <body>
@@ -83,7 +83,7 @@ for archivo, anio in zip(archivos, anios):
   </header>
 
   <main class="container registro-page">
-    <a href="index.html#recursos" class="back-link">&larr; Volver a Registros y Transparencia</a>
+    <a href="index.html#registros" class="back-link">&larr; Volver a Registros</a>
     <h1>Índice minero {anio}</h1>
     <p class="registro-count">Conservador de Minas de Ovalle · {len(registros)} inscripciones del año {anio}, ordenadas por fecha. Para ver el nombre del titular, buscar y ordenar por columna, use la <a class="contact-link" href="registro.html?tipo=minero&amp;anio={anio}">vista interactiva</a>.</p>
     <nav class="indice-anios" aria-label="Otros años">
@@ -106,7 +106,7 @@ for archivo, anio in zip(archivos, anios):
     </div>
   </footer>
 
-  <script src="js/script.js?v=48"></script>
+  <script src="js/script.js?v=51"></script>
 </body>
 </html>
 """

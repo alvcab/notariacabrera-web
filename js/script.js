@@ -17,7 +17,7 @@
   }
   // Ubicación y el mapa cambian juntos; Contacto arrastra al pie de página
   const grupos = [['#ubicacion', '.map-section'], ['#servicios'], ['#funciones'],
-    ['#nosotros'], ['#recursos'], ['#contacto', '.site-footer']]
+    ['#nosotros'], ['#recursos'], ['#registros'], ['#contacto', '.site-footer']]
     .map((sel) => sel.map((q) => document.querySelector(q)).filter(Boolean))
     .filter((g) => g.length);
 
@@ -103,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
       '.section > .complaints-box',
       '.section > .links-grid',
       '.section > .resource-link',
+      '.section > .registro-grupo',
       '.info-grid > *',
       '.cards-grid > *',
       '.map-section',

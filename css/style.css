@@ -725,6 +725,7 @@ html.reveal :is(
   .section > .complaints-box,
   .section > .links-grid,
   .section > .resource-link,
+  .section > .registro-grupo,
   .info-grid > *,
   .cards-grid > *,
   .map-section
@@ -743,6 +744,7 @@ html.reveal :is(
   .section > .complaints-box,
   .section > .links-grid,
   .section > .resource-link,
+  .section > .registro-grupo,
   .info-grid > *,
   .cards-grid > *,
   .map-section
@@ -1042,7 +1044,7 @@ html[data-tema="alternado"] #mapa-ubicacion {
    La barra de arriba no cambia. */
 
 /* Todas las secciones toman la base crema de la página (anula los colores fijos de las franjas) */
-html.oscurece :is(#ubicacion, .map-section, #servicios, #funciones, #nosotros, #recursos, #contacto, .site-footer) {
+html.oscurece :is(#ubicacion, .map-section, #servicios, #funciones, #nosotros, #recursos, #registros, #contacto, .site-footer) {
   /* Tono inicial de las secciones: "casi bosque" (#1c2c21), un verde apenas más claro que el verde bosque */
   --bg: #1c2c21;
   --bg-alt: #2c3b31;
@@ -1073,7 +1075,7 @@ html.oscurece :is(#ubicacion, .map-section, #servicios, #funciones, #nosotros, #
 /* Tono oscuro "verde bosque" (#14201a): título principal (fijo) y secciones ya alcanzadas al bajar.
    La barra de arriba no cambia. */
 html.oscurece #inicio,
-html.oscurece :is(#ubicacion, .map-section, #servicios, #funciones, #nosotros, #recursos, #contacto, .site-footer).negra {
+html.oscurece :is(#ubicacion, .map-section, #servicios, #funciones, #nosotros, #recursos, #registros, #contacto, .site-footer).negra {
   --bg: #14201a;
   --bg-alt: #1d2b23;
   --text: #f5f2ec;
@@ -1105,7 +1107,7 @@ html.oscurece .map-section {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html.oscurece :is(#ubicacion, .map-section, #servicios, #funciones, #nosotros, #recursos, #contacto, .site-footer) {
+  html.oscurece :is(#ubicacion, .map-section, #servicios, #funciones, #nosotros, #recursos, #registros, #contacto, .site-footer) {
     transition: none;
   }
 }
@@ -1121,7 +1123,7 @@ html[data-tema="alternado"] #ubicacion {
 
 /* ── Inicio: cada sección es un recuadro con bordes redondeados (como "Consultas, Reclamos y
    Sugerencias"), dentro del ancho del contenido; ya no ocupa todo el ancho de la pantalla. ── */
-html.oscurece :is(#ubicacion, #servicios, #funciones, #nosotros, #recursos, #contacto) {
+html.oscurece :is(#ubicacion, #servicios, #funciones, #nosotros, #recursos, #registros, #contacto) {
   box-shadow: none;
   clip-path: none;
   border: 1px solid var(--border);
@@ -1163,7 +1165,7 @@ html.oscurece :is(.site-footer, #_) {
 }
 
 @media (max-width: 720px) {
-  html.oscurece :is(#ubicacion, #servicios, #funciones, #nosotros, #recursos, #contacto) {
+  html.oscurece :is(#ubicacion, #servicios, #funciones, #nosotros, #recursos, #registros, #contacto) {
     width: calc(100% - 1.5rem);
     padding: 1.75rem 1.1rem;
     margin-block: 1rem;
@@ -1178,5 +1180,38 @@ html.oscurece :is(.site-footer, #_) {
 html.oscurece :is(.map-section, #_) {
     width: calc(100% - 1.5rem);
     padding: 0 1.1rem 1.1rem;
+  }
+}
+
+/* Dentro de Registros: Instrumentos Públicos y Registros Mineros en recuadros separados */
+.registro-grupo {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem 1.5rem 1.75rem;
+  margin-top: 1.5rem;
+}
+
+.registro-grupo > h3:first-child {
+  margin-top: 0;
+}
+
+@media (max-width: 720px) {
+  .registro-grupo {
+    padding: 1.1rem 0.9rem 1.25rem;
+  }
+}
+
+/* Otros Registros Mineros: los 5 botones en una sola fila (en pantallas angostas se reparten) */
+.links-grid--5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.links-grid--5 .resource-link {
+  padding-inline: 0.75rem;
+}
+
+@media (max-width: 1000px) {
+  .links-grid--5 {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   }
 }

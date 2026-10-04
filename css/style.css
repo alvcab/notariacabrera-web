@@ -370,6 +370,75 @@ a {
   gap: 0.75rem;
 }
 
+/* Página de trámites: preguntas desplegables (cerradas por defecto) */
+.tramites-intro {
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+.tramites-page h2 {
+  font-size: 1.35rem;
+  margin: 2.5rem 0 1rem;
+}
+
+.accordion {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.accordion details {
+  background-color: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: border-color 0.2s ease;
+}
+
+.accordion details[open] {
+  border-color: var(--accent);
+}
+
+.accordion summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+
+.accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.accordion summary::after {
+  content: "+";
+  color: var(--accent);
+  font-size: 1.4rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.accordion details[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.accordion details > :not(summary) {
+  margin: 0 1.25rem 1rem;
+  color: var(--text-muted);
+}
+
+.tramites-links {
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.tramites-links a {
+  color: var(--accent);
+}
+
 /* Staff list */
 .staff-list {
   list-style: none;

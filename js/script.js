@@ -78,6 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
     targets.forEach((el) => observer.observe(el));
   }
 
+  mostrarTurno();
+
   document.querySelectorAll('.back-link[data-close-tab]').forEach((link) => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
@@ -89,3 +91,75 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+// ── Notaría de turno ────────────────────────────────────────────────────
+// Cada turno es un periodo (normalmente un mes) en que la notaría atiende ciertos días
+// de la semana. Fechas en formato AAAA-MM-DD; dias: 0 = domingo, 1 = lunes … 6 = sábado.
+//   - De lunes a viernes avisa el próximo día de turno de esa semana ("De turno el sábado 10").
+//   - El mismo día de turno avisa "De turno hoy".
+//   - Fuera del periodo no muestra nada.
+// Todo se calcula con la hora de Chile. Para probar cómo se ve un día cualquiera:
+// abrir la página con ?fecha=2026-10-07 (simula ese día).
+const TURNOS = [
+  // Ejemplo (turno de octubre, los sábados de 9:00 a 14:00):
+  // { inicio: '2026-10-01', fin: '2026-10-31', dias: [6], desde: '9:00', hasta: '14:00' },
+];
+
+const DIAS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+const DIAS_CORTOS = ['dom.', 'lun.', 'mar.', 'mié.', 'jue.', 'vie.', 'sáb.'];
+
+// Fechas como texto AAAA-MM-DD, tratadas en UTC para que sumar días no dependa de la zona horaria
+const aFecha = (texto) => new Date(`${texto}T00:00:00Z`);
+const aTexto = (fecha) => fecha.toISOString().slice(0, 10);
+
+function buscarTurno(hoyTexto) {
+  const hoy = aFecha(hoyTexto);
+  const diaSemana = hoy.getUTCDay();
+
+  for (const turno of TURNOS) {
+    if (hoyTexto < turno.inicio || hoyTexto > turno.fin) continue;
+
+    // ¿Hoy es día de turno?
+    if (turno.dias.includes(diaSemana)) return { turno, fecha: hoy, esHoy: true };
+
+    // Si no: el próximo día de turno dentro de esta misma semana (de lunes a domingo).
+    // El domingo no anuncia nada: el sábado siguiente ya es otra semana.
+    if (diaSemana === 0) continue;
+    for (let i = 1; diaSemana + i <= 7; i++) {
+      const fecha = new Date(hoy.getTime() + i * 86400000);
+      const texto = aTexto(fecha);
+      if (texto > turno.fin) break;
+      if (turno.dias.includes(fecha.getUTCDay())) return { turno, fecha, esHoy: false };
+    }
+  }
+  return null;
+}
+
+function mostrarTurno() {
+  const header = document.querySelector('.header-inner');
+  const logo = header && header.querySelector('.logo');
+  if (!logo) return;
+
+  const simulada = new URLSearchParams(location.search).get('fecha');
+  const hoy = /^\d{4}-\d{2}-\d{2}$/.test(simulada || '')
+    ? simulada
+    : new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Santiago' }).format(new Date());
+
+  const resultado = buscarTurno(hoy);
+  if (!resultado) return;
+
+  const { turno, fecha, esHoy } = resultado;
+  const dia = fecha.getUTCDay();
+  const numero = fecha.getUTCDate();
+  const largo = esHoy ? 'De turno hoy' : `De turno el ${DIAS[dia]} ${numero}`;
+  const corto = esHoy ? 'De turno hoy' : `Turno ${DIAS_CORTOS[dia]} ${numero}`;
+
+  // Es solo informativo: un <span>, no un link, así que hacer click no hace nada
+  const aviso = document.createElement('span');
+  aviso.className = esHoy ? 'turno-badge' : 'turno-badge turno-badge--proximo';
+  aviso.innerHTML =
+    '<span class="turno-dot" aria-hidden="true"></span>' +
+    `<span class="turno-largo">${largo}</span><span class="turno-corto">${corto}</span>` +
+    `<span class="turno-horario"> · ${turno.desde} a ${turno.hasta} hrs.</span>`;
+  logo.after(aviso);
+}

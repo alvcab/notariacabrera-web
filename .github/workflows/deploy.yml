@@ -26,3 +26,16 @@ jobs:
             **/.github/**
             README.md
             CNAME
+            redirect-subdominio/**
+
+      # El sitio vive en notariacabrera.cl; el subdominio antiguo solo redirige allá.
+      # Al sincronizar esta carpeta (que solo tiene el .htaccess) se borran los archivos viejos del subdominio.
+      - name: Redirigir 2.notariacabrera.cl al dominio principal
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./redirect-subdominio/
+          server-dir: ./domains/2.notariacabrera.cl/public_html/

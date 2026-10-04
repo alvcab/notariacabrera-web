@@ -1,0 +1,4 @@
+# Se publica en 2.notariacabrera.cl (ver .github/workflows/deploy.yml):
+# el sitio se movió al dominio principal, así que todo redirige allá.
+RewriteEngine On
+RewriteRule ^(.*)$ https://notariacabrera.cl/$1 [R=301,L]

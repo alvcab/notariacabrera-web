@@ -1,3 +1,8 @@
 RewriteEngine On
+
+# www.notariacabrera.cl -> notariacabrera.cl (una sola dirección para Google)
+RewriteCond %{HTTP_HOST} ^www\.notariacabrera\.cl$ [NC]
+RewriteRule ^ https://notariacabrera.cl%{REQUEST_URI} [L,R=301]
+
 RewriteCond %{HTTPS} off
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

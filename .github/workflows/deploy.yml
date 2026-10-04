@@ -27,6 +27,7 @@ jobs:
             README.md
             CNAME
             redirect-subdominio/**
+            scripts/**
 
       # El sitio vive en notariacabrera.cl; el subdominio antiguo solo redirige allá.
       # Al sincronizar esta carpeta (que solo tiene el .htaccess) se borran los archivos viejos del subdominio.

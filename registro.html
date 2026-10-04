@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registro de Índices — Notaría Cabrera, Segunda Notaría de Ovalle</title>
   <link rel="icon" type="image/png" href="assets/logo.png">
-  <link rel="stylesheet" href="css/style.css?v=19">
-  <link rel="stylesheet" href="css/registro.css">
+  <link rel="stylesheet" href="css/style.css?v=20">
+  <link rel="stylesheet" href="css/registro.css?v=2">
 </head>
 <body>
   <header class="site-header">
@@ -24,7 +24,10 @@
       <h1 id="registroTitle">Registro</h1>
       <p id="registroCount" class="registro-count"></p>
 
-      <input type="text" id="registroSearch" class="registro-search" placeholder="Buscar por nombre, materia, repertorio...">
+      <div class="registro-search-wrap">
+        <input type="text" id="registroSearch" class="registro-search" placeholder="Buscar por nombre, materia, repertorio...">
+        <button type="button" id="registroSearchClear" class="registro-search-clear" aria-label="Borrar búsqueda" hidden>&times;</button>
+      </div>
     </div>
 
     <div class="registro-table-wrap">
@@ -48,6 +51,6 @@
   </footer>
 
   <script src="js/script.js?v=21"></script>
-  <script src="js/registro.js"></script>
+  <script src="js/registro.js?v=2"></script>
 </body>
 </html>

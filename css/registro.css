@@ -67,6 +67,40 @@
   font-size: 0.95rem;
 }
 
+.registro-search-wrap {
+  position: relative;
+  max-width: 420px;
+  margin-bottom: 1.5rem;
+}
+
+.registro-search-wrap .registro-search {
+  margin-bottom: 0;
+  padding-right: 2.75rem;
+}
+
+.registro-search-clear {
+  position: absolute;
+  top: 50%;
+  right: 0.35rem;
+  transform: translateY(-50%);
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.registro-search-clear:hover,
+.registro-search-clear:focus-visible {
+  color: var(--text);
+  background-color: var(--border);
+  outline: none;
+}
+
 .registro-search:focus {
   outline: none;
   border-color: var(--accent);

@@ -142,7 +142,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     countEl.textContent = `${filteredRows.length} de ${allRows.length} registros`;
   }
 
+  // Botón X: aparece cuando hay texto y borra la búsqueda
+  const clearEl = document.getElementById('registroSearchClear');
+  if (clearEl) {
+    clearEl.addEventListener('click', () => {
+      searchEl.value = '';
+      searchEl.dispatchEvent(new Event('input'));
+      searchEl.focus();
+    });
+  }
+
   searchEl.addEventListener('input', () => {
+    if (clearEl) clearEl.hidden = !searchEl.value;
     const term = searchEl.value.trim().toLowerCase();
     filteredRows = !term
       ? allRows

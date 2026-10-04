@@ -1018,8 +1018,8 @@ html[data-tema="alternado"] #mapa-ubicacion {
 }
 
 /* Variables de color registradas para poder animarlas (cambio suave crema ↔ verde en el inicio) */
-@property --c-borde { syntax: '<color>'; inherits: true; initial-value: #f0e2c4; }
-@property --c-centro { syntax: '<color>'; inherits: true; initial-value: #f0e2c4; }
+@property --c-borde { syntax: '<color>'; inherits: true; initial-value: #4a6150; }
+@property --c-centro { syntax: '<color>'; inherits: true; initial-value: #4a6150; }
 @property --bg { syntax: '<color>'; inherits: true; initial-value: #0d0d0d; }
 @property --bg-alt { syntax: '<color>'; inherits: true; initial-value: #171a17; }
 @property --text { syntax: '<color>'; inherits: true; initial-value: #f2f2f2; }
@@ -1034,27 +1034,28 @@ html[data-tema="alternado"] #mapa-ubicacion {
 
 /* Todas las secciones toman la base crema de la página (anula los colores fijos de las franjas) */
 html.oscurece :is(#ubicacion, .map-section, #servicios, #funciones, #nosotros, #recursos, #contacto, .site-footer) {
-  --bg: #f0e2c4;
-  --bg-alt: #f8f0de;
-  --text: #2a2620;
-  --text-muted: #6f685c;
-  --accent: #2e7d32;
-  --border: #dccba8;
-  --on-accent: #ffffff;
-  --link: #0066cc;
-  --shadow: rgba(60, 45, 20, 0.14);
-  --accent-soft: rgba(46, 125, 50, 0.1);
-  --accent-line: rgba(46, 125, 50, 0.45);
+  /* Tono inicial de las secciones: "abeto" (#4a6150), un verde apenas más claro que el verde bosque */
+  --bg: #4a6150;
+  --bg-alt: #586e5e;
+  --text: #f5f2ec;
+  --text-muted: #c2c6bd;
+  --accent: #9fdca5;
+  --border: #6b7d70;
+  --on-accent: #14201a;
+  --link: #6cb8ff;
+  --shadow: rgba(0, 0, 0, 0.4);
+  --accent-soft: rgba(159, 220, 165, 0.12);
+  --accent-line: rgba(159, 220, 165, 0.45);
   color: var(--text);
   background-color: var(--bg);
   /* Fondo: degradado radial cuyo color de orillas (--c-borde) y de centro (--c-centro) se animan
      por separado: al pasar a verde cambian primero las orillas y luego el centro, y la animación
      siempre termina, así que nunca queda un halo crema. */
-  --c-borde: #f0e2c4;
-  --c-centro: #f0e2c4;
+  --c-borde: #4a6150;
+  --c-centro: #4a6150;
   background-image: radial-gradient(ellipse closest-side at 50% 50%, var(--c-centro) 0%, var(--c-borde) 100%);
   box-shadow: 0 0 0 100vmax var(--c-borde);
-  /* De vuelta a crema: el centro se aclara primero y las orillas lo siguen */
+  /* De vuelta al tono inicial: el centro se aclara primero y las orillas lo siguen */
   transition: --c-centro 1.6s ease-in-out, --c-borde 1.6s ease-in-out 0.4s,
     --bg-alt 1.6s ease-in-out 0.2s, --text 1.6s ease-in-out 0.2s, --text-muted 1.6s ease-in-out 0.2s,
     --accent 1.6s ease-in-out 0.2s, --border 1.6s ease-in-out 0.2s;
@@ -1107,4 +1108,66 @@ html[data-tema="alternado"] .hero {
 
 html[data-tema="alternado"] #ubicacion {
   padding-top: 2.5rem;
+}
+
+/* ── Inicio: cada sección es un recuadro con bordes redondeados (como "Consultas, Reclamos y
+   Sugerencias"), dentro del ancho del contenido; ya no ocupa todo el ancho de la pantalla. ── */
+html.oscurece :is(#ubicacion, #servicios, #funciones, #nosotros, #recursos, #contacto) {
+  box-shadow: none;
+  clip-path: none;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  margin: 1.5rem auto;
+  /* el recuadro no puede ser más ancho que la pantalla menos los márgenes laterales */
+  width: calc(100% - 3rem);
+  max-width: calc(1400px - 3rem);
+}
+
+/* Ubicación y su mapa forman un solo recuadro: Ubicación arriba, mapa abajo */
+html.oscurece #ubicacion {
+  margin-bottom: 0;
+  border-bottom: none;
+  border-radius: 16px 16px 0 0;
+  padding-bottom: 1.5rem;
+}
+
+/* :is(…, #_) solo sube la especificidad al nivel de un id, para ganarle a la regla base */
+html.oscurece :is(.map-section, #_) {
+  box-shadow: none;
+  clip-path: none;
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 16px 16px;
+  padding: 0 2rem 2rem;
+  margin: 0 auto 1.5rem;
+  width: calc(100% - 3rem);
+  max-width: calc(1400px - 3rem);
+}
+
+/* El pie de página queda sobre el fondo de la página, sin recuadro */
+html.oscurece :is(.site-footer, #_) {
+  background: none;
+  background-image: none;
+  box-shadow: none;
+  clip-path: none;
+}
+
+@media (max-width: 720px) {
+  html.oscurece :is(#ubicacion, #servicios, #funciones, #nosotros, #recursos, #contacto) {
+    width: calc(100% - 1.5rem);
+    padding: 1.75rem 1.1rem;
+    margin-block: 1rem;
+  }
+
+  html.oscurece #ubicacion {
+    margin-bottom: 0;
+    padding-bottom: 1.1rem;
+  }
+
+  /* :is(…, #_) solo sube la especificidad al nivel de un id, para ganarle a la regla base */
+html.oscurece :is(.map-section, #_) {
+    width: calc(100% - 1.5rem);
+    padding: 0 1.1rem 1.1rem;
+  }
 }

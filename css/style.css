@@ -191,6 +191,13 @@ a {
   }
 }
 
+/* Nota de turnos en la tarjeta de horario */
+.turno-nota {
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
 /* Map */
 .map-section {
   height: 560px;
@@ -649,7 +656,7 @@ a {
 
   .nav-list {
     position: absolute;
-    top: 70px;
+    top: 100%;
     left: 0;
     right: 0;
     background-color: var(--bg-alt);
@@ -693,7 +700,8 @@ html.reveal :is(
   .map-section
 ) {
   /* Conserva las transiciones de hover que ya tenían los links */
-  transition: opacity 3.6s cubic-bezier(0.25, 0.1, 0.25, 1), border-color 0.2s ease, color 0.2s ease;
+  transition: opacity 3.6s cubic-bezier(0.25, 0.1, 0.25, 1), border-color 0.4s ease, color 0.2s ease,
+    transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 /* Ocultos hasta que js/script.js les pone .is-in al entrar en pantalla */
@@ -753,7 +761,7 @@ html.reveal .hero > :nth-child(2) {
 
   .header-inner:has(.turno-badge) .nav-list {
     position: absolute;
-    top: 70px;
+    top: 100%;
     left: 0;
     right: 0;
     background-color: var(--bg-alt);
@@ -774,5 +782,133 @@ html.reveal .hero > :nth-child(2) {
   .header-inner:has(.turno-badge) .nav-list a {
     display: block;
     padding: 1rem 1.5rem;
+  }
+}
+
+/* Aviso de turno largo ("Turno notarial 2026: mayo y noviembre"): en pantallas medianas
+   se usa el texto corto para que el menú no se parta en dos líneas */
+@media (max-width: 1350px) {
+  .turno-largo {
+    display: none;
+  }
+
+  .turno-corto {
+    display: inline;
+  }
+}
+
+/* Celular: el aviso baja a una línea propia bajo el logo, para no tapar el botón del menú */
+@media (max-width: 480px) {
+  .header-inner:has(.turno-badge) {
+    height: auto;
+    flex-wrap: wrap;
+    padding-block: 0.6rem;
+    row-gap: 0.4rem;
+  }
+
+  /* Salto de línea forzado: el aviso siempre queda en su propia fila, aunque sea corto */
+  .header-inner:has(.turno-badge)::after {
+    content: "";
+    flex-basis: 100%;
+    order: 2;
+  }
+
+  .header-inner .turno-badge {
+    order: 3;
+    margin: 0 auto 0.2rem;
+  }
+}
+
+/* ── Efectos estilo Apple ─────────────────────────────────────────── */
+
+/* 1. Barra de arriba translúcida: el contenido se ve difuminado detrás al bajar */
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .site-header {
+    background-color: rgba(23, 26, 23, 0.72);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+}
+
+/* 2. Tarjetas: se agrandan y elevan al pasar el mouse */
+.info-card,
+.card {
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.info-card:hover,
+.card:not(.card--compact):hover,
+.accordion details:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
+  border-color: rgba(76, 175, 80, 0.45);
+}
+
+/* Los desplegables de trámites ocupan todo el ancho: crecen menos para no salirse de los márgenes */
+.accordion details:hover {
+  transform: translateY(-3px) scale(1.025);
+}
+
+/* 3. Botones: crecen y se elevan al pasar el mouse */
+.resource-link,
+.year-links a,
+.directions-link,
+.indice-anio {
+  transition: transform 0.3s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.resource-link:hover,
+.year-links a:hover,
+.directions-link:hover,
+.indice-anio:hover {
+  transform: translateY(-2px) scale(1.07);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.resource-link,
+.year-links a {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+/* 4. Subrayado verde de los títulos: se dibuja de izquierda a derecha al aparecer */
+.section h2 {
+  position: relative;
+  border-bottom: none;
+}
+
+.section h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--accent);
+  transform-origin: left;
+  transition: transform 1.4s cubic-bezier(0.25, 0.1, 0.25, 1) 0.8s;
+}
+
+html.reveal .section > h2:not(.is-in)::after {
+  transform: scaleX(0);
+}
+
+/* 5. Mapa: aparece con un zoom muy suave */
+html.reveal .map-section {
+  transition: opacity 3.6s cubic-bezier(0.25, 0.1, 0.25, 1), transform 3s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+html.reveal .map-section:not(.is-in) {
+  transform: scale(0.96);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .info-card:hover,
+  .card:hover,
+  .accordion details:hover,
+  .resource-link:hover,
+  .year-links a:hover,
+  .directions-link:hover,
+  .indice-anio:hover {
+    transform: none;
   }
 }

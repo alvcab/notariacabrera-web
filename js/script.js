@@ -67,10 +67,15 @@ document.addEventListener('DOMContentLoaded', () => {
       initialWait = 0;
       entering.forEach((entry, i) => {
         const el = entry.target;
-        el.style.transitionDelay = `${wait + i * 0.3}s`;
+        // La espera se aplica solo a la primera transición de la lista (el fundido de opacidad);
+        // las demás (borde, color, elevación y sombra al pasar el mouse) quedan sin espera.
+        // Un valor por transición: si faltan, CSS repite la lista y la espera volvería a aparecer.
+        el.style.transitionDelay = `${wait + i * 0.3}s, 0s, 0s, 0s, 0s`;
         el.classList.add('is-in');
         // Quita el retraso al terminar, para que los hover respondan al instante
-        el.addEventListener('transitionend', () => { el.style.transitionDelay = ''; }, { once: true });
+        el.addEventListener('transitionend', (e) => {
+          if (e.target === el && e.propertyName === 'opacity') el.style.transitionDelay = '';
+        });
         observer.unobserve(entry.target);
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
@@ -93,20 +98,34 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ── Notaría de turno ────────────────────────────────────────────────────
-// Cada turno es un periodo (normalmente un mes) en que la notaría atiende ciertos días
-// de la semana. Fechas en formato AAAA-MM-DD; dias: 0 = domingo, 1 = lunes … 6 = sábado.
-//   - De lunes a viernes avisa el próximo día de turno de esa semana ("De turno el sábado 10").
-//   - El mismo día de turno avisa "De turno hoy".
-//   - Fuera del periodo no muestra nada.
+// Cada turno es un periodo (normalmente un mes). Fechas en formato AAAA-MM-DD.
+//   - Sin "dias": durante todo el periodo dice "Estamos de turno".
+//   - Con dias (0 = domingo, 1 = lunes … 6 = sábado) y horario desde/hasta:
+//       · el día de turno dice "Estamos de turno · 9:00 a 14:00 hrs.";
+//       · de lunes a viernes avisa el próximo día de turno de la semana ("De turno el sábado 10").
+//   - Fuera del periodo muestra los meses de turno del año ("Turno notarial 2026: mayo y noviembre").
 // Todo se calcula con la hora de Chile. Para probar cómo se ve un día cualquiera:
 // abrir la página con ?fecha=2026-10-07 (simula ese día).
 const TURNOS = [
-  // Ejemplo (turno de octubre, los sábados de 9:00 a 14:00):
-  // { inicio: '2026-10-01', fin: '2026-10-31', dias: [6], desde: '9:00', hasta: '14:00' },
+  // Fuente: calendario de turnos de la Asociación de Notarios y Conservadores (marzo 2026).
+  // En Ovalle el turno es los sábados de 9:00 a 12:00 (no se atiende los sábados feriados).
+  // Pendiente: resto de 2026 y 2027 según el calendario de la notaría.
+  { inicio: '2026-03-01', fin: '2026-03-31', dias: [6], desde: '9:00', hasta: '12:00' },
 ];
 
 const DIAS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
 const DIAS_CORTOS = ['dom.', 'lun.', 'mar.', 'mié.', 'jue.', 'vie.', 'sáb.'];
+const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+const MESES_CORTOS = ['ene.', 'feb.', 'mar.', 'abr.', 'may.', 'jun.', 'jul.', 'ago.', 'sept.', 'oct.', 'nov.', 'dic.'];
+
+// "mayo y noviembre", "marzo, julio y noviembre"
+const unirConY = (lista) => (lista.length > 1 ? `${lista.slice(0, -1).join(', ')} y ${lista[lista.length - 1]}` : lista[0] || '');
+
+// Meses de turno del año, según el mes en que empieza cada periodo
+function mesesDeTurno(anio) {
+  const meses = [...new Set(TURNOS.filter((t) => t.inicio.startsWith(anio)).map((t) => Number(t.inicio.slice(5, 7)) - 1))];
+  return meses.sort((a, b) => a - b);
+}
 
 // Fechas como texto AAAA-MM-DD, tratadas en UTC para que sumar días no dependa de la zona horaria
 const aFecha = (texto) => new Date(`${texto}T00:00:00Z`);
@@ -118,6 +137,9 @@ function buscarTurno(hoyTexto) {
 
   for (const turno of TURNOS) {
     if (hoyTexto < turno.inicio || hoyTexto > turno.fin) continue;
+
+    // Sin calendario de días: todo el periodo cuenta como turno
+    if (!turno.dias) return { turno, fecha: hoy, esHoy: true };
 
     // ¿Hoy es día de turno?
     if (turno.dias.includes(diaSemana)) return { turno, fecha: hoy, esHoy: true };
@@ -146,20 +168,34 @@ function mostrarTurno() {
     : new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Santiago' }).format(new Date());
 
   const resultado = buscarTurno(hoy);
-  if (!resultado) return;
+  const aviso = document.createElement('span');
+
+  // Fuera del turno: aviso fijo con los meses de turno del año
+  if (!resultado) {
+    const anio = hoy.slice(0, 4);
+    const meses = mesesDeTurno(anio);
+    if (!meses.length) return;
+    aviso.className = 'turno-badge turno-badge--proximo';
+    aviso.innerHTML =
+      '<span class="turno-dot" aria-hidden="true"></span>' +
+      `<span class="turno-largo">Turno notarial ${anio}: ${unirConY(meses.map((m) => MESES[m]))}</span>` +
+      `<span class="turno-corto">Turno: ${unirConY(meses.map((m) => MESES_CORTOS[m]))}</span>`;
+    logo.after(aviso);
+    return;
+  }
 
   const { turno, fecha, esHoy } = resultado;
   const dia = fecha.getUTCDay();
   const numero = fecha.getUTCDate();
-  const largo = esHoy ? 'De turno hoy' : `De turno el ${DIAS[dia]} ${numero}`;
-  const corto = esHoy ? 'De turno hoy' : `Turno ${DIAS_CORTOS[dia]} ${numero}`;
+  const largo = esHoy ? 'Estamos de turno' : `De turno el ${DIAS[dia]} ${numero}`;
+  const corto = esHoy ? 'De turno' : `Turno ${DIAS_CORTOS[dia]} ${numero}`;
+  const horario = turno.desde && turno.hasta ? `<span class="turno-horario"> · ${turno.desde} a ${turno.hasta} hrs.</span>` : '';
 
   // Es solo informativo: un <span>, no un link, así que hacer click no hace nada
-  const aviso = document.createElement('span');
   aviso.className = esHoy ? 'turno-badge' : 'turno-badge turno-badge--proximo';
   aviso.innerHTML =
     '<span class="turno-dot" aria-hidden="true"></span>' +
     `<span class="turno-largo">${largo}</span><span class="turno-corto">${corto}</span>` +
-    `<span class="turno-horario"> · ${turno.desde} a ${turno.hasta} hrs.</span>`;
+    horario;
   logo.after(aviso);
 }

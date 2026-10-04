@@ -19,7 +19,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           local-dir: ./
-          server-dir: ./domains/2.notariacabrera.cl/public_html/
+          server-dir: ./domains/notariacabrera.cl/public_html/
           exclude: |
             **/.git*
             **/.git*/**

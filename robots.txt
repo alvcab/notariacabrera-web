@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://2.notariacabrera.cl/sitemap.xml
+Sitemap: https://notariacabrera.cl/sitemap.xml

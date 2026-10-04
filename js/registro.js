@@ -59,7 +59,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     texto.href = `indice-minero-${anio}.html`;
     texto.className = 'registro-texto-link';
     texto.textContent = 'Ver índice en texto';
-    countEl.after(texto);
+    // Abajo y discreto, después de la paginación: es para Google más que para las personas
+    document.querySelector('.registro-pager').after(texto);
   }
   document.title = `${config.title} ${anio} — Segunda Notaría Pública de Ovalle`;
 

@@ -68,7 +68,7 @@ for archivo, anio in zip(archivos, anios):
   <meta name="description" content="{html.escape(descripcion, quote=True)}">
   <link rel="canonical" href="{url}">
   <link rel="icon" type="image/png" href="assets/logo.png">
-  <link rel="stylesheet" href="css/style.css?v=77">
+  <link rel="stylesheet" href="css/style.css?v=91">
   <link rel="stylesheet" href="css/registro.css?v=7">
 </head>
 <body>
@@ -106,7 +106,7 @@ for archivo, anio in zip(archivos, anios):
     </div>
   </footer>
 
-  <script src="js/script.js?v=51"></script>
+  <script src="js/script.js?v=52"></script>
 </body>
 </html>
 """

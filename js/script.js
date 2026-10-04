@@ -134,6 +134,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
 
     targets.forEach((el) => observer.observe(el));
+
+    // Raya bajo los títulos: aparece al entrar en pantalla y se recoge al salir, en ambos sentidos
+    const rayas = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => entry.target.classList.toggle('linea', entry.isIntersecting));
+    }, { threshold: 0, rootMargin: '-12% 0px -12% 0px' });
+    document.querySelectorAll('.section > h2').forEach((h) => rayas.observe(h));
   }
 
   mostrarTurno();

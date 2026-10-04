@@ -39,7 +39,8 @@ a {
 }
 
 .container {
-  max-width: 1400px;
+  /* En pantallas grandes ocupa el 90 % del ancho (margen proporcional a cada lado); nunca menos de 1400 px */
+  max-width: max(1400px, 90vw);
   margin: 0 auto;
   padding: 0 1.5rem;
 }
@@ -570,6 +571,37 @@ a {
   margin-bottom: 0;
 }
 
+/* Equipo: dos columnas juntas (cada una del ancho de su nombre más largo), con la misma
+   separación vertical entre nombres que Suplentes */
+.staff-list--2col {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  grid-template-rows: repeat(4, auto);
+  grid-auto-flow: column;
+  column-gap: 4.5rem;
+  justify-content: center;
+  row-gap: 0.5rem;
+}
+
+.staff-list--2col li {
+  margin-bottom: 0;
+}
+
+@media (max-width: 420px) {
+  .staff-list--2col {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    grid-auto-flow: row;
+  }
+}
+
+/* Nosotros: la tarjeta Equipo es más ancha para que los nombres quepan en dos columnas */
+@media (min-width: 900px) {
+  #nosotros .cards-grid {
+    grid-template-columns: 1fr 1.6fr 1fr;
+  }
+}
+
 .staff-role {
   font-size: 0.85rem;
   opacity: 0.8;
@@ -917,10 +949,20 @@ html.reveal .hero > :nth-child(2) {
   height: 3px;
   background-color: var(--accent);
   transform-origin: left;
-  transition: transform 1.4s cubic-bezier(0.25, 0.1, 0.25, 1) 0.8s;
+  transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s;
 }
 
-html.reveal .section > h2:not(.is-in)::after {
+/* La raya se dibuja de izquierda a derecha cada vez que el título entra en pantalla, bajando o subiendo,
+   y al salir también se recoge de izquierda a derecha; js/script.js pone o quita la clase "linea" */
+html.reveal .section > h2::after {
+  transform-origin: right;
+}
+
+html.reveal .section > h2.linea::after {
+  transform-origin: left;
+}
+
+html.reveal .section > h2:not(.linea)::after {
   transform: scaleX(0);
 }
 
@@ -951,7 +993,7 @@ html.reveal .map-section:not(.is-in) {
 /* Base de todas las páginas: verde bosque (#14201a). El inicio usa crema en sus secciones
    (ver html.oscurece); la barra de arriba conserva su propio color. */
 html[data-tema="alternado"] {
-  --bg: #14201a;
+  --bg: #0f1913;
   --bg-alt: #1d2b23;
   --text: #f5f2ec;
   --text-muted: #a9b8ad;
@@ -1132,7 +1174,7 @@ html.oscurece :is(#ubicacion, #servicios, #funciones, #nosotros, #recursos, #reg
   margin: 1.5rem auto;
   /* el recuadro no puede ser más ancho que la pantalla menos los márgenes laterales */
   width: calc(100% - 3rem);
-  max-width: calc(1400px - 3rem);
+  max-width: calc(max(1400px, 90vw) - 3rem);
 }
 
 /* Ubicación y su mapa forman un solo recuadro: Ubicación arriba, mapa abajo */
@@ -1153,7 +1195,7 @@ html.oscurece :is(.map-section, #_) {
   padding: 0 2rem 2rem;
   margin: 0 auto 1.5rem;
   width: calc(100% - 3rem);
-  max-width: calc(1400px - 3rem);
+  max-width: calc(max(1400px, 90vw) - 3rem);
 }
 
 /* El pie de página queda sobre el fondo de la página, sin recuadro */
@@ -1214,4 +1256,15 @@ html.oscurece :is(.map-section, #_) {
   .links-grid--5 {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   }
+}
+
+/* Nosotros: espacio entre el título de cada tarjeta (Suplentes, Equipo, Personal) y los nombres */
+#nosotros .cards-grid .card h3 {
+  margin-bottom: 1rem;
+}
+
+/* Fondo de la página y título principal un poco más oscuros (#0f1913) que el verde bosque de los
+   recuadros, para que estos contrasten un poco más */
+html.oscurece #inicio {
+  --bg: #0f1913;
 }

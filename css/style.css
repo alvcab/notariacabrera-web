@@ -295,7 +295,7 @@ a {
 }
 
 .note-highlight {
-  font-size: 1.75rem;
+  font-size: 1.4rem;
   text-align: center;
 }
 
@@ -607,18 +607,27 @@ a {
   margin-top: 2rem;
 }
 
-/* Botón a lo ancho del contenido (Ver trámites y preguntas frecuentes) */
+/* Botón centrado de un tercio del ancho (Ver trámites y preguntas frecuentes); en celular, ancho completo */
 .funciones-button.boton-ancho {
-  width: 100%;
+  width: min(100%, max(33.333%, 22rem));
+  margin-inline: auto;
   text-align: center;
-  padding-block: 1.2rem;
-  font-size: 1.3rem;
+  padding-block: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 600;
 }
 
-/* A todo lo ancho, el botón crece menos al pasar el mouse para no salirse de los márgenes */
-.funciones-button.boton-ancho:hover {
-  transform: translateY(-2px) scale(1.01);
+/* Botón: fondo normal de tarjeta con letras verdes; al pasar el mouse o tocarlo, letras blancas */
+.funciones-button.boton-ancho {
+  color: #4caf50;
+}
+
+/* Al pasar el mouse o tocarlo, crece un poco y las letras pasan a blanco */
+.funciones-button.boton-ancho:hover,
+.funciones-button.boton-ancho:focus-visible,
+.funciones-button.boton-ancho:active {
+  transform: translateY(-2px) scale(1.03);
+  color: #ffffff;
 }
 
 .section h3 + .links-grid,

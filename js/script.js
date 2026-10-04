@@ -110,7 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Lo que ya está en pantalla al abrir la página espera 1,5 s (mientras baja el título);
     // lo que aparece después al hacer scroll empieza de inmediato.
-    let initialWait = 1.5;
+    // Si se llega a una sección con #ancla (por ejemplo al volver desde Trámites), sin espera
+    let initialWait = location.hash ? 0 : 1.5;
 
     const observer = new IntersectionObserver((entries) => {
       const entering = entries.filter((entry) => entry.isIntersecting);
@@ -135,6 +136,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   mostrarTurno();
+
+  // Al volver desde Trámites (#ver-tramites), dejar el botón centrado en la pantalla
+  if (location.hash === '#ver-tramites') {
+    const boton = document.getElementById('ver-tramites');
+    const centrar = () => boton && boton.scrollIntoView({ block: 'center', behavior: 'instant' });
+    centrar();
+    window.addEventListener('load', centrar, { once: true });
+  }
 
   document.querySelectorAll('.back-link[data-close-tab]').forEach((link) => {
     link.addEventListener('click', (e) => {

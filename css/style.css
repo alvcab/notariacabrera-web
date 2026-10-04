@@ -43,7 +43,8 @@ a {
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
-  z-index: 100;
+  /* Por encima del mapa: Leaflet usa z-index de hasta 1000 en sus capas y botones */
+  z-index: 2000;
 }
 
 .header-inner {
@@ -459,7 +460,6 @@ a {
    html.reveal la agrega el <head> de index.html; si el script no corre,
    el mismo <head> la quita y todo se ve normal. */
 html.reveal :is(
-  .hero > *,
   .section > h2,
   .section > h3,
   .section > p,
@@ -472,12 +472,11 @@ html.reveal :is(
   .map-section
 ) {
   /* Conserva las transiciones de hover que ya tenían los links */
-  transition: opacity 1.6s cubic-bezier(0.25, 0.1, 0.25, 1), border-color 0.2s ease, color 0.2s ease;
+  transition: opacity 3.6s cubic-bezier(0.25, 0.1, 0.25, 1), border-color 0.2s ease, color 0.2s ease;
 }
 
 /* Ocultos hasta que js/script.js les pone .is-in al entrar en pantalla */
 html.reveal :is(
-  .hero > *,
   .section > h2,
   .section > h3,
   .section > p,
@@ -495,5 +494,25 @@ html.reveal :is(
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+}
+
+/* Título principal: baja lentamente a su lugar al cargar la página, línea por línea */
+html.reveal .hero > * {
+  animation: hero-drop 3.6s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+}
+
+html.reveal .hero > :nth-child(2) {
+  animation-delay: 0.7s;
+}
+
+@keyframes hero-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }

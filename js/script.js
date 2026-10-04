@@ -45,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.documentElement.classList.contains('reveal')) {
     window.__revealOK = true;
     const targets = document.querySelectorAll([
-      '.hero > *',
       '.section > h2',
       '.section > h3',
       '.section > p',
@@ -58,11 +57,17 @@ document.addEventListener('DOMContentLoaded', () => {
       '.map-section',
     ].join(','));
 
+    // Lo que ya está en pantalla al abrir la página espera 2 s (mientras baja el título);
+    // lo que aparece después al hacer scroll empieza de inmediato.
+    let initialWait = 2;
+
     const observer = new IntersectionObserver((entries) => {
       const entering = entries.filter((entry) => entry.isIntersecting);
+      const wait = initialWait;
+      initialWait = 0;
       entering.forEach((entry, i) => {
         const el = entry.target;
-        el.style.transitionDelay = `${i * 0.15}s`;
+        el.style.transitionDelay = `${wait + i * 0.3}s`;
         el.classList.add('is-in');
         // Quita el retraso al terminar, para que los hover respondan al instante
         el.addEventListener('transitionend', () => { el.style.transitionDelay = ''; }, { once: true });

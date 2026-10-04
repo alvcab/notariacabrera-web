@@ -607,6 +607,20 @@ a {
   margin-top: 2rem;
 }
 
+/* Botón a lo ancho del contenido (Ver trámites y preguntas frecuentes) */
+.funciones-button.boton-ancho {
+  width: 100%;
+  text-align: center;
+  padding-block: 1.2rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+/* A todo lo ancho, el botón crece menos al pasar el mouse para no salirse de los márgenes */
+.funciones-button.boton-ancho:hover {
+  transform: translateY(-2px) scale(1.01);
+}
+
 .section h3 + .links-grid,
 .section h3 + .year-links,
 .section h3 + .card {
@@ -923,26 +937,27 @@ html.reveal .map-section:not(.is-in) {
 /* ── Diseño de franjas alternadas, negras y crema, como apple.com ──
    Se activa con data-tema="alternado" en <html> (todas las páginas). */
 
-/* Base clara (franjas claras): crema #f1e9da, con texto café muy oscuro */
+/* Base de todas las páginas: verde bosque (#14201a). El inicio usa crema en sus secciones
+   (ver html.oscurece); la barra de arriba conserva su propio color. */
 html[data-tema="alternado"] {
-  --bg: #f1e9da;
-  --bg-alt: #f9f5ec;
-  --text: #2a2620;
-  --text-muted: #6f685c;
-  --accent: #2e7d32;
-  --border: #dfd4c0;
-  --on-accent: #ffffff;
-  --link: #0066cc;
-  --header-glass: rgba(22, 22, 23, 0.8);
-  --shadow: rgba(60, 45, 20, 0.14);
-  --accent-soft: rgba(46, 125, 50, 0.1);
-  --accent-line: rgba(46, 125, 50, 0.45);
+  --bg: #14201a;
+  --bg-alt: #1d2b23;
+  --text: #f5f2ec;
+  --text-muted: #a9b8ad;
+  --accent: #4caf50;
+  --border: #2f4036;
+  --on-accent: #14201a;
+  --link: #6cb8ff;
+  --header-glass: rgba(20, 32, 26, 0.88);
+  --shadow: rgba(0, 0, 0, 0.45);
+  --accent-soft: rgba(76, 175, 80, 0.12);
+  --accent-line: rgba(76, 175, 80, 0.45);
 }
 
 /* Franjas negras: las variables se redefinen solo dentro de estas secciones.
    El título principal parte en negro y desde ahí se alterna; la barra de arriba también es negra. */
 html[data-tema="alternado"] :is(.site-header, #inicio, #servicios, #nosotros, #contacto) {
-  --header-glass: rgba(22, 22, 23, 0.8);
+  --header-glass: rgba(20, 32, 26, 0.88);
   --bg: #000000;
   --bg-alt: #1d1d1f;
   --text: #f5f5f7;
@@ -1002,9 +1017,9 @@ html[data-tema="alternado"] #mapa-ubicacion {
   }
 }
 
-/* Página de inicio (html.franjas): todo parte negro y cada franja crema se enciende sola
-   según dónde esté en la pantalla (js/script.js le pone o quita la clase "crema").
-   Las variables de color se registran para que el cambio sea una transición suave. */
+/* Variables de color registradas para poder animarlas (cambio suave crema ↔ verde en el inicio) */
+@property --c-borde { syntax: '<color>'; inherits: true; initial-value: #f0e2c4; }
+@property --c-centro { syntax: '<color>'; inherits: true; initial-value: #f0e2c4; }
 @property --bg { syntax: '<color>'; inherits: true; initial-value: #0d0d0d; }
 @property --bg-alt { syntax: '<color>'; inherits: true; initial-value: #171a17; }
 @property --text { syntax: '<color>'; inherits: true; initial-value: #f2f2f2; }
@@ -1012,50 +1027,84 @@ html[data-tema="alternado"] #mapa-ubicacion {
 @property --accent { syntax: '<color>'; inherits: true; initial-value: #4caf50; }
 @property --border { syntax: '<color>'; inherits: true; initial-value: #2a2e2a; }
 
-/* Base negra en el inicio (incluye franjas crema apagadas y pie de página) */
-html[data-tema="alternado"].franjas {
-  --bg: #000000;
-  --bg-alt: #1d1d1f;
-  --text: #f5f5f7;
-  --text-muted: #a1a1a6;
-  --accent: #4caf50;
-  --border: #333336;
-  --on-accent: #000000;
-  --link: #2997ff;
-  --shadow: rgba(0, 0, 0, 0.5);
-  --accent-soft: rgba(76, 175, 80, 0.12);
-  --accent-line: rgba(76, 175, 80, 0.45);
-}
+/* ── Inicio (html.oscurece): el título principal siempre negro; el resto parte crema
+   y al bajar cada sección pasa a negro ──
+   js/script.js pone o quita la clase "negra" en cada sección según el scroll.
+   La barra de arriba no cambia. */
 
-html[data-tema="alternado"].franjas :is(#ubicacion, .map-section, #funciones, #recursos) {
-  /* Cada franja usa su propio color de texto (si no, hereda el blanco de la página negra) */
-  color: var(--text);
-  transition: --bg 0.9s ease, --bg-alt 0.9s ease, --text 0.9s ease, --text-muted 0.9s ease,
-    --accent 0.9s ease, --border 0.9s ease;
-}
-
-/* Evita una línea fina entre la franja de Ubicación y el mapa */
-html[data-tema="alternado"].franjas .map-section {
-  margin-top: -1px;
-}
-
-/* Franja crema encendida */
-html[data-tema="alternado"].franjas :is(#ubicacion, .map-section, #funciones, #recursos).crema {
-  --bg: #f1e9da;
-  --bg-alt: #f9f5ec;
+/* Todas las secciones toman la base crema de la página (anula los colores fijos de las franjas) */
+html.oscurece :is(#ubicacion, .map-section, #servicios, #funciones, #nosotros, #recursos, #contacto, .site-footer) {
+  --bg: #f0e2c4;
+  --bg-alt: #f8f0de;
   --text: #2a2620;
   --text-muted: #6f685c;
   --accent: #2e7d32;
-  --border: #dfd4c0;
+  --border: #dccba8;
   --on-accent: #ffffff;
   --link: #0066cc;
   --shadow: rgba(60, 45, 20, 0.14);
   --accent-soft: rgba(46, 125, 50, 0.1);
   --accent-line: rgba(46, 125, 50, 0.45);
+  color: var(--text);
+  background-color: var(--bg);
+  /* Fondo: degradado radial cuyo color de orillas (--c-borde) y de centro (--c-centro) se animan
+     por separado: al pasar a verde cambian primero las orillas y luego el centro, y la animación
+     siempre termina, así que nunca queda un halo crema. */
+  --c-borde: #f0e2c4;
+  --c-centro: #f0e2c4;
+  background-image: radial-gradient(ellipse closest-side at 50% 50%, var(--c-centro) 0%, var(--c-borde) 100%);
+  box-shadow: 0 0 0 100vmax var(--c-borde);
+  /* De vuelta a crema: el centro se aclara primero y las orillas lo siguen */
+  transition: --c-centro 1.6s ease-in-out, --c-borde 1.6s ease-in-out 0.4s,
+    --bg-alt 1.6s ease-in-out 0.2s, --text 1.6s ease-in-out 0.2s, --text-muted 1.6s ease-in-out 0.2s,
+    --accent 1.6s ease-in-out 0.2s, --border 1.6s ease-in-out 0.2s;
+}
+
+/* Tono oscuro "verde bosque" (#14201a): título principal (fijo) y secciones ya alcanzadas al bajar.
+   La barra de arriba no cambia. */
+html.oscurece #inicio,
+html.oscurece :is(#ubicacion, .map-section, #servicios, #funciones, #nosotros, #recursos, #contacto, .site-footer).negra {
+  --bg: #14201a;
+  --bg-alt: #1d2b23;
+  --text: #f5f2ec;
+  --text-muted: #a9b8ad;
+  --accent: #4caf50;
+  --border: #2f4036;
+  --on-accent: #000000;
+  --link: #2997ff;
+  --shadow: rgba(0, 0, 0, 0.5);
+  --accent-soft: rgba(76, 175, 80, 0.12);
+  --accent-line: rgba(76, 175, 80, 0.45);
+  --c-borde: #14201a;
+  --c-centro: #14201a;
+  /* A verde: las orillas (esquinas y bordes) primero, el centro después */
+  transition: --c-borde 1.6s ease-in-out, --c-centro 1.6s ease-in-out 0.4s,
+    --bg-alt 1.6s ease-in-out 0.2s, --text 1.6s ease-in-out 0.2s, --text-muted 1.6s ease-in-out 0.2s,
+    --accent 1.6s ease-in-out 0.2s, --border 1.6s ease-in-out 0.2s;
+}
+
+/* El pie de página ocupa todo el ancho, como las secciones */
+html.oscurece .site-footer {
+  box-shadow: 0 0 0 100vmax var(--bg);
+  clip-path: inset(0 -100vmax);
+}
+
+/* Sin línea fina entre Ubicación y el mapa */
+html.oscurece .map-section {
+  margin-top: -1px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html[data-tema="alternado"].franjas :is(#ubicacion, .map-section, #funciones, #recursos) {
+  html.oscurece :is(#ubicacion, .map-section, #servicios, #funciones, #nosotros, #recursos, #contacto, .site-footer) {
     transition: none;
   }
+}
+
+/* Menos espacio entre el título principal y Ubicación y Horarios */
+html[data-tema="alternado"] .hero {
+  padding-block: 4rem 2.5rem;
+}
+
+html[data-tema="alternado"] #ubicacion {
+  padding-top: 2.5rem;
 }

@@ -1,17 +1,32 @@
-// Página de inicio: todo parte negro y cada franja crema cambia sola según el scroll.
-//   - Bajando: la franja se enciende (crema) cuando su borde superior sube del 65 % de la pantalla.
-//   - Subiendo: la franja se apaga (negro) apenas su borde superior baja del 15 % de la pantalla,
-//     o sea, en cuanto empiezas a salir de ella hacia arriba. Así se ve cómo se oscurece al subir.
-//   - Arriba del todo, todo negro.
-(function franjasCrema() {
+// Página de inicio (html.oscurece): el título principal es siempre verde bosque; el resto parte crema
+// y cada sección se va poniendo verde a medida que se baja (y vuelve a crema al subir).
+//   - Bajando: la sección se pone negra cuando su borde superior sube del 65 % de la pantalla.
+//   - Subiendo: vuelve a crema apenas su borde superior baja del 15 %, o sea, al salir de ella hacia arriba.
+//   - Arriba del todo, todo crema.
+(function inicioOscurece() {
   const root = document.documentElement;
-  if (!root.classList.contains('franjas')) return;
-  // Ubicación y el mapa forman una sola franja: cambian juntos
-  const grupos = [['#ubicacion', '.map-section'], ['#funciones'], ['#recursos']]
-    .map((sel) => sel.map((s) => document.querySelector(s)).filter(Boolean))
-    .filter((g) => g.length);
-  let ultimoY = window.scrollY;
+  if (!root.classList.contains('oscurece')) return;
 
+  // Vista de prueba ?vista=franjas: franjas fijas crema / verde alternadas, sin cambios al hacer scroll
+  if (new URLSearchParams(location.search).get('vista') === 'franjas') {
+    const fijar = () => ['#servicios', '#nosotros', '#contacto', '.site-footer']
+      .forEach((q) => document.querySelector(q)?.classList.add('negra'));
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fijar);
+    else fijar();
+    return;
+  }
+  // Ubicación y el mapa cambian juntos; Contacto arrastra al pie de página
+  const grupos = [['#ubicacion', '.map-section'], ['#servicios'], ['#funciones'],
+    ['#nosotros'], ['#recursos'], ['#contacto', '.site-footer']]
+    .map((sel) => sel.map((q) => document.querySelector(q)).filter(Boolean))
+    .filter((g) => g.length);
+
+  // Cada sección pasa de crema a verde con una animación que siempre termina (nunca queda a medias):
+  //   - Bajando: se pone verde cuando su borde superior sube del 65 % de la pantalla.
+  //   - Subiendo: vuelve a crema apenas su borde superior baja del 15 %, al salir de ella hacia arriba.
+  //   - Arriba del todo, todo crema.
+  // El efecto de las esquinas hacia el centro lo hace el CSS (ver .negra en css/style.css).
+  let ultimoY = window.scrollY;
   const revisar = () => {
     const y = window.scrollY;
     const subiendo = y < ultimoY;
@@ -19,11 +34,11 @@
     const alto = window.innerHeight;
     grupos.forEach((grupo) => {
       const top = grupo[0].getBoundingClientRect().top;
-      let encendida = grupo[0].classList.contains('crema');
-      if (y <= 40) encendida = false;
-      else if (subiendo) { if (top > alto * 0.15) encendida = false; }
-      else encendida = top < alto * 0.65;
-      grupo.forEach((el) => el.classList.toggle('crema', encendida));
+      let negra = grupo[0].classList.contains('negra');
+      if (y <= 40) negra = false;
+      else if (subiendo) { if (top > alto * 0.15) negra = false; }
+      else negra = top < alto * 0.65;
+      grupo.forEach((el) => el.classList.toggle('negra', negra));
     });
   };
 
@@ -32,6 +47,7 @@
   window.addEventListener('scroll', revisar, { passive: true });
   window.addEventListener('resize', revisar);
 })();
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const navToggle = document.getElementById('navToggle');

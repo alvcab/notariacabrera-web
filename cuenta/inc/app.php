@@ -267,7 +267,7 @@ function cabecera(string $titulo): void
   <link rel="icon" type="image/png" href="/assets/logo.png">
   <link rel="stylesheet" href="/css/style.css?v=92">
   <link rel="stylesheet" href="/css/registro.css?v=7">
-  <link rel="stylesheet" href="/css/cuenta.css?v=2">
+  <link rel="stylesheet" href="/css/cuenta.css?v=3">
 </head>
 <body>
   <header class="site-header">
@@ -298,7 +298,7 @@ function pie(): void
     </div>
   </footer>
 
-  <script src="/js/script.js?v=52"></script>
+  <script src="/js/script.js?v=53"></script>
 </body>
 </html>
   <?php

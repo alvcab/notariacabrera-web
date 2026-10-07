@@ -178,6 +178,7 @@ const TURNOS = [
   // En Ovalle el turno es los sábados de 9:00 a 12:00 (no se atiende los sábados feriados).
   // Pendiente: resto de 2026 y 2027 según el calendario de la notaría.
   { inicio: '2026-03-01', fin: '2026-03-31', dias: [6], desde: '9:00', hasta: '12:00' },
+  { inicio: '2026-11-01', fin: '2026-11-30', dias: [6], desde: '9:00', hasta: '12:00' },
 ];
 
 const DIAS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];

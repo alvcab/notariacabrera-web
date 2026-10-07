@@ -23,8 +23,11 @@ if (!is_file($ruta)) {
   exit('Documento no encontrado.');
 }
 
-db()->prepare('INSERT INTO descargas (usuario_id, registro, archivo, ip) VALUES (?, ?, ?, ?)')
-  ->execute([$usuario['id'], $registro, $archivo, ip()]);
+// Los administradores no se registran: así la lista de la administración muestra solo al público
+if (!es_admin($usuario)) {
+  db()->prepare('INSERT INTO descargas (usuario_id, registro, archivo, ip) VALUES (?, ?, ?, ?)')
+    ->execute([$usuario['id'], $registro, $archivo, ip()]);
+}
 
 header('Content-Type: application/pdf');
 header('Content-Length: ' . filesize($ruta));

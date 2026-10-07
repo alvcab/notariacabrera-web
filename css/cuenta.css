@@ -162,13 +162,23 @@
   margin-bottom: 1.75rem;
 }
 
-.admin-totales div {
+.admin-totales a {
   background-color: var(--bg-alt);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 0.9rem 1.1rem;
   display: flex;
   flex-direction: column;
+  transition: border-color 0.2s ease, transform 0.3s ease;
+}
+
+.admin-totales a:hover,
+.admin-totales a.activa {
+  border-color: var(--accent);
+}
+
+.admin-totales a:hover {
+  transform: translateY(-2px);
 }
 
 .admin-totales strong {

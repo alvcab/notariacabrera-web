@@ -28,29 +28,34 @@ $rutLike = $rut === '' ? $like : "%$rut%";
 $limite = 500;
 
 if ($vista === 'usuarios') {
-  $sql = "SELECT u.nombre, u.rut, u.email, u.creado_en, u.confirmado_en, u.ultimo_ingreso,
+  $sql = "SELECT u.nombre, u.rut, u.email, u.creado_en, u.confirmado_en, u.ultimo_ingreso, a.email IS NOT NULL AS es_admin,
                  (SELECT COUNT(*) FROM descargas d WHERE d.usuario_id = u.id) AS documentos
-          FROM usuarios u
+          FROM usuarios u LEFT JOIN administradores a ON a.email = u.email
           WHERE (? = '' OR u.nombre LIKE ? OR u.email LIKE ? OR REPLACE(u.rut, '-', '') LIKE ?)" .
           ($filtro === 'activos' ? ' AND u.confirmado_en IS NOT NULL' : '') . "
           ORDER BY u.creado_en DESC";
   $params = [$q, $like, $like, $rutLike];
-  $columnas = ['Nombre', 'RUT', 'Correo', 'Registro', 'Activada', 'Último ingreso', 'Documentos abiertos'];
+  $columnas = ['Nombre', 'RUT', 'Correo', 'Tipo', 'Registro', 'Activada', 'Último ingreso', 'Documentos abiertos'];
 } else {
-  $sql = "SELECT d.fecha, u.nombre, u.rut, u.email, d.registro, d.archivo, d.ip
-          FROM descargas d JOIN usuarios u ON u.id = d.usuario_id
+  $sql = "SELECT d.fecha, u.nombre, u.rut, u.email, a.email IS NOT NULL AS es_admin, d.registro, d.archivo, d.ip
+          FROM descargas d JOIN usuarios u ON u.id = d.usuario_id LEFT JOIN administradores a ON a.email = u.email
           WHERE (? = '' OR u.nombre LIKE ? OR u.email LIKE ? OR REPLACE(u.rut, '-', '') LIKE ? OR d.archivo LIKE ? OR d.registro LIKE ?)" .
           ($filtro === '30dias' ? ' AND d.fecha > DATE_SUB(NOW(), INTERVAL 30 DAY)' : '') . "
           ORDER BY d.fecha DESC";
   $params = [$q, $like, $like, $rutLike, $like, $like];
-  $columnas = ['Fecha', 'Nombre', 'RUT', 'Correo', 'Registro', 'Documento', 'IP'];
+  $columnas = ['Fecha', 'Nombre', 'RUT', 'Correo', 'Tipo', 'Registro', 'Documento', 'IP'];
 }
 
 function fila(string $vista, array $f): array
 {
   return $vista === 'usuarios'
-    ? [$f['nombre'], formatear_rut($f['rut']), $f['email'], $f['creado_en'], $f['confirmado_en'] ? 'Sí' : 'No', $f['ultimo_ingreso'] ?? '', $f['documentos']]
-    : [$f['fecha'], $f['nombre'], formatear_rut($f['rut']), $f['email'], $f['registro'], $f['archivo'], $f['ip']];
+    ? [$f['nombre'], formatear_rut($f['rut']), $f['email'], tipo($f), $f['creado_en'], $f['confirmado_en'] ? 'Sí' : 'No', $f['ultimo_ingreso'] ?? '', $f['documentos']]
+    : [$f['fecha'], $f['nombre'], formatear_rut($f['rut']), $f['email'], tipo($f), $f['registro'], $f['archivo'], $f['ip']];
+}
+
+function tipo(array $f): string
+{
+  return $f['es_admin'] ? 'Administrador' : 'Usuario';
 }
 
 // Celdas de la tabla en pantalla: el documento es un enlace que abre el PDF en otra pestaña
@@ -58,7 +63,7 @@ function celdas(string $vista, array $f): string
 {
   $html = '';
   foreach (fila($vista, $f) as $i => $v) {
-    $html .= $vista === 'descargas' && $i === 5
+    $html .= $vista === 'descargas' && $i === 6
       ? '<td><a href="/assets/documents/' . e($f['registro']) . '/' . e($f['archivo']) . '" target="_blank" rel="noopener" class="contact-link">' . e($v) . '</a></td>'
       : '<td>' . e((string) $v) . '</td>';
   }

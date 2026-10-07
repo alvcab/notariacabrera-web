@@ -1,0 +1,147 @@
+/* Páginas de cuenta de usuario (cuenta/*.php): crear cuenta, ingresar, recuperar contraseña */
+
+.cuenta-page {
+  max-width: 560px;
+  padding-bottom: 4rem;
+}
+
+.cuenta-intro,
+.cuenta-texto p {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.cuenta-texto h2 {
+  font-size: 1.15rem;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+
+.cuenta-texto p {
+  margin-bottom: 0.9rem;
+}
+
+.cuenta-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.cuenta-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.cuenta-form input[type="text"],
+.cuenta-form input[type="email"],
+.cuenta-form input[type="password"] {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  background-color: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font: inherit;
+  font-weight: 400;
+}
+
+.cuenta-form input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.cuenta-form .cuenta-check {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.cuenta-check input {
+  margin-top: 0.3rem;
+  accent-color: var(--accent);
+}
+
+.cuenta-ayuda {
+  font-weight: 400;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.cuenta-boton {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 0.7rem 1.6rem;
+  background-color: var(--accent);
+  color: var(--on-accent);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cuenta-boton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px var(--shadow);
+}
+
+.cuenta-boton-secundario {
+  background-color: transparent;
+  color: var(--accent);
+}
+
+.cuenta-aviso {
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.25rem;
+  border: 1px solid;
+}
+
+.cuenta-error {
+  border-color: #c0504d;
+  background-color: rgba(192, 80, 77, 0.12);
+}
+
+.cuenta-exito {
+  border-color: var(--accent-line);
+  background-color: var(--accent-soft);
+}
+
+.cuenta-pie {
+  margin-top: 1.75rem;
+  line-height: 2;
+}
+
+.cuenta-datos {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.4rem 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.cuenta-datos dt {
+  color: var(--text-muted);
+}
+
+.cuenta-salir {
+  margin-top: 2.5rem;
+}
+
+.cuenta-enlace-header {
+  color: var(--accent);
+  font-weight: 600;
+  padding-right: 1.5rem;
+}
+
+/* Aviso en las páginas de registros: los PDF piden iniciar sesión */
+.registro-aviso-cuenta {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: -0.75rem 0 1.25rem;
+}

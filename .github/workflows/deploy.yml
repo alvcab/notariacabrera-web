@@ -11,6 +11,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # PDF de los registros del Conservador: van fuera de public_html, para que solo se puedan abrir
+      # a través de documento.php (con sesión iniciada). Se suben antes que el sitio, que los saca de public_html.
+      - name: Documentos protegidos (fuera de public_html)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./assets/documents/
+          server-dir: ./domains/notariacabrera.cl/privado/documentos/
+          exclude: |
+            informe-fiscalizacion.pdf
+            declaracion-de-intereses.png
+
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -28,6 +43,12 @@ jobs:
             CNAME
             redirect-subdominio/**
             scripts/**
+            .claude/**
+            assets/documents/accionistas/**
+            assets/documents/descubrimientos/**
+            assets/documents/hipotecas/**
+            assets/documents/prohibiciones/**
+            assets/documents/propiedad/**
 
       # El sitio vive en notariacabrera.cl; el subdominio antiguo solo redirige allá.
       # Al sincronizar esta carpeta (que solo tiene el .htaccess) se borran los archivos viejos del subdominio.

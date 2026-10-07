@@ -6,3 +6,7 @@ RewriteRule ^ https://notariacabrera.cl%{REQUEST_URI} [L,R=301]
 
 RewriteCond %{HTTPS} off
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# PDF de los registros del Conservador: piden iniciar sesión (ver documento.php).
+# Los archivos no están en public_html, así que si esta regla fallara darían 404, nunca quedarían abiertos.
+RewriteRule ^assets/documents/(accionistas|descubrimientos|hipotecas|prohibiciones|propiedad)/([a-z0-9-]+\.pdf)$ documento.php?registro=$1&archivo=$2 [L]

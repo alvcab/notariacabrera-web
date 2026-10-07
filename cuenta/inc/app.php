@@ -83,6 +83,19 @@ function usuario_actual(): ?array
   return $usuario;
 }
 
+// Administradores: sus correos están en la tabla administradores (no en el código, que es público en GitHub)
+function es_admin(?array $usuario): bool
+{
+  if (!$usuario) return false;
+  try {
+    $st = db()->prepare('SELECT 1 FROM administradores WHERE email = ?');
+    $st->execute([$usuario['email']]);
+    return (bool) $st->fetchColumn();
+  } catch (PDOException $e) {
+    return false; // la tabla aún no se ha creado en la base
+  }
+}
+
 function entrar_como(int $usuarioId): void
 {
   iniciar_sesion();
@@ -252,9 +265,9 @@ function cabecera(string $titulo): void
   <meta name="robots" content="noindex">
   <title><?= e($titulo) ?> — Notaría Cabrera, Segunda Notaría de Ovalle</title>
   <link rel="icon" type="image/png" href="/assets/logo.png">
-  <link rel="stylesheet" href="/css/style.css?v=91">
+  <link rel="stylesheet" href="/css/style.css?v=92">
   <link rel="stylesheet" href="/css/registro.css?v=7">
-  <link rel="stylesheet" href="/css/cuenta.css?v=1">
+  <link rel="stylesheet" href="/css/cuenta.css?v=2">
 </head>
 <body>
   <header class="site-header">

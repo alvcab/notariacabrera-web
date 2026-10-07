@@ -710,6 +710,17 @@ a {
   font-size: 0.875rem;
 }
 
+/* Enlace discreto a la cuenta de usuario (ingresar / mi cuenta / administración) */
+.footer-acceso {
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+}
+
+.footer-acceso a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 /* Responsive nav */
 @media (max-width: 720px) {
   .nav-toggle {

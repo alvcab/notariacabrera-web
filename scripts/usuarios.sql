@@ -44,3 +44,9 @@ CREATE TABLE intentos (
   INDEX (accion, clave, creado_en),
   INDEX (creado_en)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Correos con acceso a cuenta/admin.php (deben crear su cuenta en el sitio como cualquier usuario).
+-- Los correos se agregan con: INSERT INTO administradores (email) VALUES ('correo@ejemplo.cl');
+CREATE TABLE administradores (
+  email VARCHAR(190) NOT NULL PRIMARY KEY
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

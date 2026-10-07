@@ -145,3 +145,105 @@
   color: var(--text-muted);
   margin: -0.75rem 0 1.25rem;
 }
+
+/* Administración (cuenta/admin.php): más ancha que las demás páginas de cuenta */
+.cuenta-page:has(.admin-tabla) {
+  max-width: 1400px;
+}
+
+.cuenta-pie .cuenta-boton + .cuenta-boton {
+  margin-left: 0.5rem;
+}
+
+.admin-totales {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.admin-totales div {
+  background-color: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.9rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-totales strong {
+  font-size: 1.6rem;
+  color: var(--accent);
+}
+
+.admin-totales span {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.admin-pestanas {
+  display: flex;
+  gap: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.25rem;
+}
+
+.admin-pestanas a {
+  padding: 0.5rem 0;
+  color: var(--text-muted);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.admin-pestanas a.activa {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
+}
+
+.admin-buscar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.admin-buscar .registro-search {
+  margin-bottom: 0;
+  flex: 1 1 260px;
+}
+
+.admin-buscar .cuenta-boton {
+  align-self: auto;
+}
+
+.admin-tabla-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.admin-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.admin-tabla th,
+.admin-tabla td {
+  padding: 0.55rem 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.admin-tabla th {
+  background-color: var(--bg-alt);
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.admin-tabla tbody tr:last-child td {
+  border-bottom: none;
+}

@@ -298,7 +298,7 @@ function pie(): void
     </div>
   </footer>
 
-  <script src="/js/script.js?v=53"></script>
+  <script src="/js/script.js?v=54"></script>
 </body>
 </html>
   <?php

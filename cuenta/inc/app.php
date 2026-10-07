@@ -283,6 +283,7 @@ function cabecera(string $titulo): void
   </header>
 
   <main class="container article-page cuenta-page">
+    <a href="/index.html" class="back-link" data-close-tab>&larr; Volver a Notaría Cabrera</a>
   <?php
 }
 

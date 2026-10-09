@@ -10,3 +10,11 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 # PDF de los registros del Conservador: piden iniciar sesión (ver documento.php).
 # Los archivos no están en public_html, así que si esta regla fallara darían 404, nunca quedarían abiertos.
 RewriteRule ^assets/documents/(accionistas|descubrimientos|hipotecas|prohibiciones|propiedad)/([a-z0-9-]+\.pdf)$ documento.php?registro=$1&archivo=$2 [L]
+
+# Las páginas se revisan siempre contra el servidor (si no cambiaron, el navegador usa su copia):
+# así los cambios se ven al recargar, sin tener que forzar la recarga
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>

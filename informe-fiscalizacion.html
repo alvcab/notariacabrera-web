@@ -15,7 +15,47 @@
       height: 80vh;
       border: 1px solid var(--border);
       border-radius: 8px;
-      margin-top: 1.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .informe-pestanas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1.25rem;
+    }
+
+    .informe-pestana {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0.65rem 1.2rem;
+      background-color: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .informe-pestana span {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .informe-pestana:hover,
+    .informe-pestana[aria-selected="true"] {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .informe-datos {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 1.25rem;
     }
   </style>
 </head>
@@ -32,7 +72,22 @@
   <main class="container article-page">
     <a href="index.html#recursos" class="back-link" data-close-tab>&larr; Volver a Transparencia</a>
     <h1>Informes de Fiscalización</h1>
-    <embed src="assets/documents/informe-fiscalizacion.pdf" type="application/pdf" class="pdf-frame">
+    <p class="registro-count">Informes de las visitas de inspección de la Fiscalía Judicial de la Corte de Apelaciones de La Serena, del más reciente al más antiguo.</p>
+
+    <div class="informe-pestanas" role="tablist">
+      <button type="button" role="tab" class="informe-pestana" data-informe="abril-junio-2026" aria-selected="true">2.º informe<span>abril a junio 2026</span></button>
+      <button type="button" role="tab" class="informe-pestana" data-informe="enero-marzo-2026" aria-selected="false">1.er informe<span>enero a marzo 2026</span></button>
+    </div>
+
+    <section class="informe-panel" id="abril-junio-2026" role="tabpanel">
+      <p class="informe-datos">Visita del 25 de agosto de 2026 · <a href="assets/documents/informe-fiscalizacion-2026-abril-junio.pdf" target="_blank" rel="noopener" class="contact-link">Abrir PDF en otra pestaña</a></p>
+      <embed src="assets/documents/informe-fiscalizacion-2026-abril-junio.pdf" type="application/pdf" class="pdf-frame">
+    </section>
+
+    <section class="informe-panel" id="enero-marzo-2026" role="tabpanel">
+      <p class="informe-datos">Visita del 12 de mayo de 2026 · <a href="assets/documents/informe-fiscalizacion.pdf" target="_blank" rel="noopener" class="contact-link">Abrir PDF en otra pestaña</a></p>
+      <embed src="assets/documents/informe-fiscalizacion.pdf" type="application/pdf" class="pdf-frame">
+    </section>
   </main>
 
   <footer class="site-footer">
@@ -41,6 +96,22 @@
     </div>
   </footer>
 
+  <script>
+    // Pestañas de informes: muestra uno a la vez. Sin JavaScript se ven todos, uno debajo del otro.
+    (function () {
+      const pestanas = document.querySelectorAll('.informe-pestana');
+      const mostrar = (id) => {
+        pestanas.forEach((p) => p.setAttribute('aria-selected', String(p.dataset.informe === id)));
+        document.querySelectorAll('.informe-panel').forEach((panel) => { panel.hidden = panel.id !== id; });
+      };
+      pestanas.forEach((p) => p.addEventListener('click', () => {
+        mostrar(p.dataset.informe);
+        history.replaceState(null, '', '#' + p.dataset.informe);
+      }));
+      const inicial = document.getElementById(location.hash.slice(1)) ? location.hash.slice(1) : pestanas[0].dataset.informe;
+      mostrar(inicial);
+    })();
+  </script>
   <script src="js/script.js?v=54"></script>
 </body>
 </html>

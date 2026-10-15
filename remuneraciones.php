@@ -24,7 +24,7 @@ header('X-Robots-Tag: noindex');
   <link rel="canonical" href="https://notariacabrera.cl/remuneraciones.html">
   <link rel="icon" type="image/png" href="assets/logo.png">
   <link rel="stylesheet" href="css/style.css?v=92">
-  <link rel="stylesheet" href="css/registro.css?v=7">
+  <link rel="stylesheet" href="css/registro.css?v=8">
 </head>
 <body>
   <header class="site-header">
@@ -39,6 +39,10 @@ header('X-Robots-Tag: noindex');
   <main class="container registro-page">
     <div class="registro-header">
       <a href="index.html#recursos" class="back-link" data-close-tab>&larr; Volver a Transparencia</a>
+      <div class="membrete">
+        <img src="assets/logo.png" alt="Sello del notario Rodrigo Cabrera Albarrán">
+        <span>Notaría Cabrera · Segunda Notaría de Ovalle</span>
+      </div>
       <h1>Remuneraciones</h1>
     </div>
 

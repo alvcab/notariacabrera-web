@@ -30,6 +30,31 @@
   margin-bottom: 1rem;
 }
 
+/* Membrete: sello del notario (sobre un círculo crema para que se lea en fondo oscuro) y nombre */
+.membrete {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.membrete img {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  padding: 4px;
+  border-radius: 50%;
+  background-color: #f5f2ec;
+}
+
+.membrete span {
+  color: var(--accent);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .registro-page h1 {
   font-size: 1.75rem;
   margin-bottom: 0.5rem;

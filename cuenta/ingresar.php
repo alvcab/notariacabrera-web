@@ -42,7 +42,7 @@ cabecera('Ingresar');
 ?>
     <h1>Ingresar</h1>
     <?php if (!empty($_SESSION['volver'])): ?>
-      <p class="cuenta-intro">Para ver <?= strpos($_SESSION['volver'], '/aranceles/') === 0 ? 'los aranceles' : 'los documentos de las inscripciones' ?> debe ingresar con su cuenta. Si no tiene una, <a href="/cuenta/crear.php" class="contact-link">créela aquí</a>; es gratis.</p>
+      <p class="cuenta-intro">Para ver <?= strpos($_SESSION['volver'], '/aranceles/') === 0 ? 'los aranceles' : ($_SESSION['volver'] === '/remuneraciones.html' ? 'las remuneraciones' : 'los documentos de las inscripciones') ?> debe ingresar con su cuenta. Si no tiene una, <a href="/cuenta/crear.php" class="contact-link">créela aquí</a>; es gratis.</p>
     <?php endif; ?>
 
     <?php mensajes($errores); ?>

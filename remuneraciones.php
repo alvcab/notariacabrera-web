@@ -1,3 +1,19 @@
+<?php
+// Remuneraciones pide iniciar sesión y queda anotada en "Documentos abiertos".
+// Se sigue abriendo como /remuneraciones.html (el .htaccess la manda aquí).
+require __DIR__ . '/cuenta/inc/app.php';
+
+$usuario = usuario_actual();
+if (!$usuario) {
+  redirigir('/cuenta/ingresar.php?volver=' . rawurlencode('/remuneraciones.html'));
+}
+
+db()->prepare('INSERT INTO descargas (usuario_id, registro, archivo, ip) VALUES (?, ?, ?, ?)')
+  ->execute([$usuario['id'], 'transparencia', 'remuneraciones', ip()]);
+
+header('Cache-Control: private, no-store');
+header('X-Robots-Tag: noindex');
+?>
 <!DOCTYPE html>
 <html lang="es" data-tema="alternado">
 <head>

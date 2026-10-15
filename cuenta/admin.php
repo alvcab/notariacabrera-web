@@ -63,7 +63,8 @@ function celdas(string $vista, array $f): string
 {
   $html = '';
   foreach (fila($vista, $f) as $i => $v) {
-    $enlace = $f['registro'] === 'aranceles' ? "/aranceles/{$f['archivo']}" : "/assets/documents/{$f['registro']}/{$f['archivo']}";
+    $enlace = ['aranceles' => "/aranceles/{$f['archivo']}", 'transparencia' => "/{$f['archivo']}.html"][$f['registro']]
+      ?? "/assets/documents/{$f['registro']}/{$f['archivo']}";
     $html .= $vista === 'descargas' && $i === 6
       ? '<td><a href="' . e($enlace) . '" target="_blank" rel="noopener" class="contact-link">' . e($v) . '</a></td>'
       : '<td>' . e((string) $v) . '</td>';

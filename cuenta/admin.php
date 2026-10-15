@@ -58,13 +58,14 @@ function tipo(array $f): string
   return $f['es_admin'] ? 'Administrador' : 'Usuario';
 }
 
-// Celdas de la tabla en pantalla: el documento es un enlace que abre el PDF en otra pestaña
+// Celdas de la tabla en pantalla: el documento es un enlace que abre el PDF (o el arancel) en otra pestaña
 function celdas(string $vista, array $f): string
 {
   $html = '';
   foreach (fila($vista, $f) as $i => $v) {
+    $enlace = $f['registro'] === 'aranceles' ? "/aranceles/{$f['archivo']}" : "/assets/documents/{$f['registro']}/{$f['archivo']}";
     $html .= $vista === 'descargas' && $i === 6
-      ? '<td><a href="/assets/documents/' . e($f['registro']) . '/' . e($f['archivo']) . '" target="_blank" rel="noopener" class="contact-link">' . e($v) . '</a></td>'
+      ? '<td><a href="' . e($enlace) . '" target="_blank" rel="noopener" class="contact-link">' . e($v) . '</a></td>'
       : '<td>' . e((string) $v) . '</td>';
   }
   return $html;

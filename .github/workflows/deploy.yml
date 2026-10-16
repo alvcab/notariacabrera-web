@@ -24,7 +24,8 @@ jobs:
           server-dir: ./domains/notariacabrera.cl/privado/documentos/
           exclude: |
             informe-fiscalizacion.pdf
-            declaracion-de-intereses.png
+            informe-fiscalizacion-2026-abril-junio.pdf
+            declaracion-de-intereses-2026.pdf
 
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5

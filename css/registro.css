@@ -195,6 +195,11 @@
   white-space: normal;
 }
 
+.registro-table td.col-fecha,
+.registro-table th.col-fecha {
+  white-space: nowrap;
+}
+
 .registro-table tbody tr:hover {
   background-color: var(--bg-alt);
 }

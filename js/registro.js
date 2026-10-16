@@ -5,10 +5,23 @@ function parseNumero(str) {
   return parseFloat(String(str).replace(/\./g, '').replace(',', '.')) || 0;
 }
 
+// Fecha como dd/mm/aaaa (los datos traen "09/01/2026 10:59 AM", "27/01/2025" o "01-06-2022")
+function fechaCorta(str) {
+  const m = String(str || '').match(/(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})/);
+  return m ? `${m[1].padStart(2, '0')}/${m[2].padStart(2, '0')}/${m[3]}` : '';
+}
+
+// Para ordenar por fecha: aaaammdd
+function fechaOrden(str) {
+  const f = fechaCorta(str);
+  return f ? f.slice(6) + f.slice(3, 5) + f.slice(0, 2) : '';
+}
+
 const REGISTRO_CONFIG = {
   publicos: {
     title: 'Registro de Índices de Instrumentos Públicos',
     columns: [
+      { label: 'Fecha', get: r => fechaCorta(r.fechaindice), sort: r => fechaOrden(r.fechaindice) },
       { label: 'N° Repertorio', get: r => String(r.numero || '').replace(/\./g, ''), sort: r => parseNumero(r.numero) },
       { label: 'Bimestre', get: r => r.bimestre, sort: r => BIMESTRE_ORDER[r.bimestre] || 0 },
       { label: 'Materia', get: r => r.Materia, sort: r => (r.Materia || '').toLowerCase() },
@@ -19,6 +32,7 @@ const REGISTRO_CONFIG = {
   minero: {
     title: 'Registro de Índices Mineros',
     columns: [
+      { label: 'Fecha', get: r => fechaCorta(r.fechadoc), sort: r => fechaOrden(r.fechadoc) },
       { label: 'Fojas', get: r => [r.Fojas, r.fojasdigito].filter(Boolean).join(' '), sort: r => parseNumero(r.Fojas) },
       { label: 'N° Repertorio', get: r => r.Repertorio, sort: r => parseNumero(r.Repertorio) },
       { label: 'Registro', get: r => r.Registro, sort: r => (r.Registro || '').toLowerCase() },
@@ -70,7 +84,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   function renderHead() {
     headEl.innerHTML = config.columns.map((col, i) => {
       const arrow = sortIndex === i ? (sortDir === 1 ? ' ▲' : ' ▼') : '';
-      const narrowClass = col.label === 'Materia' ? ' col-materia' : col.label === 'N° Repertorio' ? ' col-repertorio' : '';
+      const narrowClass = col.label === 'Materia' ? ' col-materia' : col.label === 'N° Repertorio' ? ' col-repertorio' : col.label === 'Fecha' ? ' col-fecha' : '';
       return `<th data-index="${i}" class="sortable${narrowClass}">${col.label}${arrow}</th>`;
     }).join('');
 
@@ -139,7 +153,9 @@ document.addEventListener('DOMContentLoaded', async () => {
           ? ` class="col-materia" title="${value.replace(/"/g, '&quot;')}"`
           : isRepertorio
             ? ' class="col-repertorio"'
-            : '';
+            : col.label === 'Fecha'
+              ? ' class="col-fecha"'
+              : '';
         return `<td${attrs}>${value}</td>`;
       }).join('');
       return `<tr>${cells}</tr>`;

@@ -51,7 +51,7 @@ for archivo, anio in zip(archivos, anios):
         fojas = " ".join(x for x in [r.get("Fojas"), r.get("fojasdigito")] if x)
         # Sin la columna Nombre: incluye personas naturales y no queremos que sus nombres
         # queden buscables en Google. La vista interactiva (registro.html) sigue mostrándola.
-        celdas = [r.get("fechadoc"), r.get("Registro"), fojas, r.get("Repertorio"), r.get("Materia")]
+        celdas = [(r.get("fechadoc") or "")[:10], r.get("Registro"), fojas, r.get("Repertorio"), r.get("Materia")]
         filas.append("<tr>" + "".join(f"<td>{html.escape(str(c or ''))}</td>" for c in celdas) + "</tr>")
 
     url = f"{BASE}indice-minero-{anio}.html"
@@ -68,7 +68,7 @@ for archivo, anio in zip(archivos, anios):
   <meta name="description" content="{html.escape(descripcion, quote=True)}">
   <link rel="canonical" href="{url}">
   <link rel="icon" type="image/png" href="assets/logo.png">
-  <link rel="stylesheet" href="css/style.css?v=91">
+  <link rel="stylesheet" href="css/style.css?v=92">
   <link rel="stylesheet" href="css/registro.css?v=7">
 </head>
 <body>
@@ -106,7 +106,7 @@ for archivo, anio in zip(archivos, anios):
     </div>
   </footer>
 
-  <script src="js/script.js?v=52"></script>
+  <script src="js/script.js?v=54"></script>
 </body>
 </html>
 """

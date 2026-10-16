@@ -43,14 +43,49 @@ if ($vista === 'usuarios') {
           ($filtro === '30dias' ? ' AND d.fecha > DATE_SUB(NOW(), INTERVAL 30 DAY)' : '') . "
           ORDER BY d.fecha DESC";
   $params = [$q, $like, $like, $rutLike, $like, $like];
-  $columnas = ['Fecha', 'Nombre', 'RUT', 'Correo', 'Tipo', 'Registro', 'Documento', 'IP'];
+  $columnas = ['Fecha', 'Nombre', 'RUT', 'Correo', 'Tipo', 'Documento', 'IP'];
 }
 
 function fila(string $vista, array $f): array
 {
   return $vista === 'usuarios'
     ? [$f['nombre'], formatear_rut($f['rut']), $f['email'], tipo($f), $f['creado_en'], $f['confirmado_en'] ? 'Sí' : 'No', $f['ultimo_ingreso'] ?? '', $f['documentos']]
-    : [$f['fecha'], $f['nombre'], formatear_rut($f['rut']), $f['email'], tipo($f), $f['registro'], $f['archivo'], $f['ip']];
+    : [$f['fecha'], $f['nombre'], formatear_rut($f['rut']), $f['email'], tipo($f), nombre_documento($f), $f['ip']];
+}
+
+// Nombre del documento tal como aparece en el sitio. Para los PDF de los registros se toma de la página
+// del registro (propiedad.html, etc.): "Registro de Propiedad · N° 55 — Fojas 164 · ACTA DE MENSURA ..."
+function nombre_documento(array $f): string
+{
+  static $paginas = [];
+  $fijos = [
+    'aranceles' => [
+      'instrumentos-publicos' => 'Arancel Notaría: Instrumentos Públicos',
+      'instrumentos-privados' => 'Arancel Notaría: Instrumentos Privados',
+      'minas' => 'Arancel Conservador de Minas',
+      'notarios' => 'Arancel Notarios Públicos (enlace antiguo)',
+    ],
+    'transparencia' => ['remuneraciones' => 'Remuneraciones Trabajadores'],
+  ];
+  if (isset($fijos[$f['registro']])) return $fijos[$f['registro']][$f['archivo']] ?? "{$f['registro']} / {$f['archivo']}";
+
+  $titulos = [
+    'accionistas' => 'Registro de Accionistas',
+    'descubrimientos' => 'Registro de Descubrimientos',
+    'hipotecas' => 'Registro de Hipotecas y Gravámenes',
+    'prohibiciones' => 'Registro de Prohibiciones e Interdicciones',
+    'propiedad' => 'Registro de Propiedad',
+  ];
+  $registro = $f['registro'];
+  if (!isset($paginas[$registro])) {
+    $paginas[$registro] = [];
+    $html = in_array($registro, REGISTROS_PROTEGIDOS, true) ? @file_get_contents(dirname(__DIR__) . "/$registro.html") : false;
+    if ($html && preg_match_all('#href="assets/documents/' . preg_quote($registro, '#') . '/([^"]+)"[^>]*>([^<]*)(?:<span class="doc-materia">([^<]*)</span>)?#', $html, $m, PREG_SET_ORDER)) {
+      foreach ($m as $doc) $paginas[$registro][$doc[1]] = trim(html_entity_decode($doc[2]) . (isset($doc[3]) && $doc[3] !== '' ? ' · ' . html_entity_decode($doc[3]) : ''));
+    }
+  }
+  $titulo = $titulos[$registro] ?? $registro;
+  return $titulo . ' · ' . ($paginas[$registro][$f['archivo']] ?? $f['archivo']);
 }
 
 function tipo(array $f): string
@@ -65,7 +100,7 @@ function celdas(string $vista, array $f): string
   foreach (fila($vista, $f) as $i => $v) {
     $enlace = ['aranceles' => "/aranceles/{$f['archivo']}", 'transparencia' => "/{$f['archivo']}.html"][$f['registro']]
       ?? "/assets/documents/{$f['registro']}/{$f['archivo']}";
-    $html .= $vista === 'descargas' && $i === 6
+    $html .= $vista === 'descargas' && $i === 5
       ? '<td><a href="' . e($enlace) . '" target="_blank" rel="noopener" class="contact-link">' . e($v) . '</a></td>'
       : '<td>' . e((string) $v) . '</td>';
   }
@@ -105,9 +140,9 @@ cabecera('Administración');
     <h1>Administración</h1>
 
     <div class="admin-totales">
+      <a href="<?= url_admin(['vista' => 'descargas', 'filtro' => '30dias']) ?>" class="<?= $filtro === '30dias' ? 'activa' : '' ?>"><strong><?= (int) $totales['descargas30'] ?></strong><span>documentos abiertos en 30 días</span></a>
       <a href="<?= url_admin(['vista' => 'usuarios']) ?>" class="<?= $vista === 'usuarios' && !$filtro ? 'activa' : '' ?>"><strong><?= (int) $totales['usuarios'] ?></strong><span>usuarios registrados</span></a>
       <a href="<?= url_admin(['vista' => 'usuarios', 'filtro' => 'activos']) ?>" class="<?= $filtro === 'activos' ? 'activa' : '' ?>"><strong><?= (int) $totales['activos'] ?></strong><span>con la cuenta activada</span></a>
-      <a href="<?= url_admin(['vista' => 'descargas', 'filtro' => '30dias']) ?>" class="<?= $filtro === '30dias' ? 'activa' : '' ?>"><strong><?= (int) $totales['descargas30'] ?></strong><span>documentos abiertos en 30 días</span></a>
     </div>
 
     <nav class="admin-pestanas">

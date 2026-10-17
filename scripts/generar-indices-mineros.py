@@ -63,16 +63,16 @@ for archivo, anio in zip(archivos, anios):
   <title>{titulo} | Notaría Cabrera</title>
   <meta name="description" content="{html.escape(descripcion, quote=True)}">
   <link rel="canonical" href="{url}">
-  <link rel="icon" type="image/png" href="assets/logo.png">
-  <link rel="stylesheet" href="css/style.css?v=92">
-  <link rel="stylesheet" href="css/registro.css?v=7">
+  <link rel="icon" type="image/png" href="assets/logo-verde.png">
+  <link rel="stylesheet" href="css/style.css?v=93">
+  <link rel="stylesheet" href="css/registro.css?v=11">
 </head>
 <body>
   <!-- Página generada por scripts/generar-indices-mineros.py desde {archivo}. No editar a mano. -->
   <header class="site-header">
     <div class="container header-inner">
       <a href="index.html" class="logo">
-        <img src="assets/logo.png" alt="" class="logo-icon">
+        <img src="assets/logo-verde.png" alt="" class="logo-icon">
         Notaría Cabrera
       </a>
     </div>

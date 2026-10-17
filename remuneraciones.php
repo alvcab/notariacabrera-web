@@ -22,15 +22,15 @@ header('X-Robots-Tag: noindex');
   <title>Remuneraciones — Notaría Cabrera, Segunda Notaría de Ovalle</title>
   <meta name="description" content="Remuneraciones del personal de la Segunda Notaría Pública y Conservador de Minas de Ovalle, Notaría Cabrera. Información de transparencia.">
   <link rel="canonical" href="https://notariacabrera.cl/remuneraciones.html">
-  <link rel="icon" type="image/png" href="assets/logo.png">
-  <link rel="stylesheet" href="css/style.css?v=92">
-  <link rel="stylesheet" href="css/registro.css?v=8">
+  <link rel="icon" type="image/png" href="assets/logo-verde.png">
+  <link rel="stylesheet" href="css/style.css?v=93">
+  <link rel="stylesheet" href="css/registro.css?v=11">
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
       <a href="index.html" class="logo">
-        <img src="assets/logo.png" alt="" class="logo-icon">
+        <img src="assets/logo-verde.png" alt="" class="logo-icon">
         Notaría Cabrera
       </a>
     </div>
@@ -40,7 +40,7 @@ header('X-Robots-Tag: noindex');
     <div class="registro-header">
       <a href="index.html#recursos" class="back-link" data-close-tab>&larr; Volver a Transparencia</a>
       <div class="membrete">
-        <img src="assets/logo.png" alt="Sello del notario Rodrigo Cabrera Albarrán">
+        <img src="assets/logo-verde.png" alt="Sello del notario Rodrigo Cabrera Albarrán">
         <span>Notaría Cabrera · Segunda Notaría de Ovalle</span>
       </div>
       <h1>Remuneraciones</h1>

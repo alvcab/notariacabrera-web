@@ -264,16 +264,16 @@ function cabecera(string $titulo): void
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex">
   <title><?= e($titulo) ?> — Notaría Cabrera, Segunda Notaría de Ovalle</title>
-  <link rel="icon" type="image/png" href="/assets/logo.png">
-  <link rel="stylesheet" href="/css/style.css?v=92">
-  <link rel="stylesheet" href="/css/registro.css?v=7">
+  <link rel="icon" type="image/png" href="/assets/logo-verde.png">
+  <link rel="stylesheet" href="/css/style.css?v=93">
+  <link rel="stylesheet" href="/css/registro.css?v=11">
   <link rel="stylesheet" href="/css/cuenta.css?v=3">
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
       <a href="/index.html" class="logo">
-        <img src="/assets/logo.png" alt="" class="logo-icon">
+        <img src="/assets/logo-verde.png" alt="" class="logo-icon">
         Notaría Cabrera
       </a>
       <?php if ($usuario): ?>

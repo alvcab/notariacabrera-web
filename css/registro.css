@@ -30,7 +30,7 @@
   margin-bottom: 1rem;
 }
 
-/* Membrete: sello del notario (sobre un círculo crema para que se lea en fondo oscuro) y nombre */
+/* Membrete: sello del notario (en verde claro, sin fondo) y nombre */
 .membrete {
   display: flex;
   align-items: center;
@@ -42,9 +42,14 @@
   width: 72px;
   height: 72px;
   flex-shrink: 0;
-  padding: 4px;
-  border-radius: 50%;
-  background-color: #f5f2ec;
+}
+
+/* Al imprimir sobre papel blanco, el sello verde claro se oscurece para que se lea */
+@media print {
+  .membrete img,
+  .logo-icon {
+    filter: brightness(0.35);
+  }
 }
 
 .membrete span {

@@ -73,12 +73,10 @@ a {
   letter-spacing: 0.5px;
 }
 
+/* Sello en verde claro y sin fondo sobre la barra oscura (assets/logo-verde.png) */
 .logo-icon {
   width: 36px;
   height: 36px;
-  background-color: #ffffff;
-  border-radius: 50%;
-  padding: 2px;
 }
 
 .main-nav {

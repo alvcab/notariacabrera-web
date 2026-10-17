@@ -191,8 +191,7 @@
 
 .registro-table td.col-repertorio,
 .registro-table th.col-repertorio {
-  max-width: 70px;
-  white-space: normal;
+  white-space: nowrap;
 }
 
 .registro-table td.col-fecha,

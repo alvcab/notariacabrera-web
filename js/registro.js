@@ -22,8 +22,8 @@ const REGISTRO_CONFIG = {
     title: 'Registro de Índices de Instrumentos Públicos',
     columns: [
       { label: 'Fecha', get: r => fechaCorta(r.fechaindice) || '--', sort: r => fechaOrden(r.fechaindice) },
-      { label: 'N° Repertorio', get: r => String(r.numero || '').replace(/\./g, ''), sort: r => parseNumero(r.numero) },
-      { label: 'Bimestre', get: r => r.bimestre, sort: r => BIMESTRE_ORDER[r.bimestre] || 0 },
+      { label: 'N° Rep.', get: r => String(r.numero || '').replace(/\./g, ''), sort: r => parseNumero(r.numero) },
+      { label: 'Bimestre', get: r => (r.bimestre || '').toUpperCase(), sort: r => BIMESTRE_ORDER[r.bimestre] || 0 },
       { label: 'Materia', get: r => r.Materia, sort: r => (r.Materia || '').toLowerCase() },
       { label: 'Otorgante 1', get: r => [r.nom1, r.appaterno1, r.apmaterno1].filter(Boolean).join(' '), sort: r => (r.appaterno1 || '').toLowerCase() },
       { label: 'Otorgante 2', get: r => [r.nom2, r.appaterno2, r.apmaterno2].filter(Boolean).join(' '), sort: r => (r.appaterno2 || '').toLowerCase() },
@@ -34,7 +34,7 @@ const REGISTRO_CONFIG = {
     columns: [
       { label: 'Fecha', get: r => fechaCorta(r.fechadoc) || '--', sort: r => fechaOrden(r.fechadoc) },
       { label: 'Fojas', get: r => [r.Fojas, r.fojasdigito].filter(Boolean).join(' '), sort: r => parseNumero(r.Fojas) },
-      { label: 'N° Repertorio', get: r => r.Repertorio, sort: r => parseNumero(r.Repertorio) },
+      { label: 'N° Rep.', get: r => r.Repertorio, sort: r => parseNumero(r.Repertorio) },
       { label: 'Registro', get: r => r.Registro, sort: r => (r.Registro || '').toLowerCase() },
       { label: 'Nombre', get: r => r.Nombre, sort: r => (r.Nombre || '').toLowerCase() },
       { label: 'Materia', get: r => r.Materia, sort: r => (r.Materia || '').toLowerCase() },
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   function renderHead() {
     headEl.innerHTML = config.columns.map((col, i) => {
       const arrow = sortIndex === i ? (sortDir === 1 ? ' ▲' : ' ▼') : '';
-      const narrowClass = col.label === 'Materia' ? ' col-materia' : col.label === 'N° Repertorio' ? ' col-repertorio' : col.label === 'Fecha' ? ' col-fecha' : '';
+      const narrowClass = col.label === 'Materia' ? ' col-materia' : col.label === 'N° Rep.' ? ' col-repertorio' : col.label === 'Fecha' ? ' col-fecha' : '';
       return `<th data-index="${i}" class="sortable${narrowClass}">${col.label}${arrow}</th>`;
     }).join('');
 
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const DEFAULT_SORT_OVERRIDES = {
     'publicos-2022': 'Bimestre',
   };
-  const defaultSortLabel = DEFAULT_SORT_OVERRIDES[`${tipo}-${anio}`] || 'N° Repertorio';
+  const defaultSortLabel = DEFAULT_SORT_OVERRIDES[`${tipo}-${anio}`] || 'N° Rep.';
 
   filteredRows = allRows;
   sortIndex = config.columns.findIndex(col => col.label === defaultSortLabel);
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const cells = config.columns.map(col => {
         const value = col.get(row) || '';
         const isMateria = col.label === 'Materia';
-        const isRepertorio = col.label === 'N° Repertorio';
+        const isRepertorio = col.label === 'N° Rep.';
         const attrs = isMateria
           ? ` class="col-materia" title="${value.replace(/"/g, '&quot;')}"`
           : isRepertorio

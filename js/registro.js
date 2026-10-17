@@ -21,7 +21,7 @@ const REGISTRO_CONFIG = {
   publicos: {
     title: 'Registro de Índices de Instrumentos Públicos',
     columns: [
-      { label: 'Fecha', get: r => fechaCorta(r.fechaindice), sort: r => fechaOrden(r.fechaindice) },
+      { label: 'Fecha', get: r => fechaCorta(r.fechaindice) || '--', sort: r => fechaOrden(r.fechaindice) },
       { label: 'N° Repertorio', get: r => String(r.numero || '').replace(/\./g, ''), sort: r => parseNumero(r.numero) },
       { label: 'Bimestre', get: r => r.bimestre, sort: r => BIMESTRE_ORDER[r.bimestre] || 0 },
       { label: 'Materia', get: r => r.Materia, sort: r => (r.Materia || '').toLowerCase() },
@@ -32,7 +32,7 @@ const REGISTRO_CONFIG = {
   minero: {
     title: 'Registro de Índices Mineros',
     columns: [
-      { label: 'Fecha', get: r => fechaCorta(r.fechadoc), sort: r => fechaOrden(r.fechadoc) },
+      { label: 'Fecha', get: r => fechaCorta(r.fechadoc) || '--', sort: r => fechaOrden(r.fechadoc) },
       { label: 'Fojas', get: r => [r.Fojas, r.fojasdigito].filter(Boolean).join(' '), sort: r => parseNumero(r.Fojas) },
       { label: 'N° Repertorio', get: r => r.Repertorio, sort: r => parseNumero(r.Repertorio) },
       { label: 'Registro', get: r => r.Registro, sort: r => (r.Registro || '').toLowerCase() },

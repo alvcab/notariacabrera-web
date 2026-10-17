@@ -34,15 +34,15 @@ try {
     PDO::ATTR_EMULATE_PREPARES => false,
   ]);
 
-  // Fecha: la del documento; en los traspasados del sistema anterior (que no la tienen), la del índice
+  // Fecha: solo la del documento. Los traspasados del sistema anterior no la tienen (su fecha es la del tipeo): la página muestra "--"
   if ($tipo === 'publicos') {
     $st = $pdo->prepare("SELECT id AS Id, bimestre, materia AS Materia, numero, anio,
                                 otorgante1_paterno AS appaterno1, otorgante1_materno AS apmaterno1, otorgante1_nombres AS nom1,
                                 otorgante2_paterno AS appaterno2, otorgante2_materno AS apmaterno2, otorgante2_nombres AS nom2,
-                                DATE_FORMAT(COALESCE(fecha_documento, fecha_indice), '%d/%m/%Y') AS fechaindice
+                                DATE_FORMAT(fecha_documento, '%d/%m/%Y') AS fechaindice
                          FROM publicos_inscripciones WHERE anio = ?");
   } else {
-    $st = $pdo->prepare("SELECT id AS Id, DATE_FORMAT(COALESCE(fecha_documento, fecha_indice), '%d/%m/%Y') AS fechadoc,
+    $st = $pdo->prepare("SELECT id AS Id, DATE_FORMAT(fecha_documento, '%d/%m/%Y') AS fechadoc,
                                 UPPER(registro) AS Registro, fojas AS Fojas, fojas_sufijo AS fojasdigito, repertorio AS Repertorio,
                                 nombre AS Nombre, materia AS Materia, anio AS aniorepertorio
                          FROM minero_inscripciones WHERE anio = ?");

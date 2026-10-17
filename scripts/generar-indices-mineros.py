@@ -23,11 +23,6 @@ def numero(valor):
         return 0
 
 
-def fecha_orden(texto):
-    m = re.match(r"(\d{2})/(\d{2})/(\d{4})", texto or "")
-    return (m.group(3), m.group(2), m.group(1)) if m else ("", "", "")
-
-
 archivos = sorted(glob.glob("assets/data/minero-*.json"), reverse=True)
 anios = [re.search(r"(\d{4})", a).group(1) for a in archivos]
 
@@ -44,14 +39,15 @@ def navegacion(actual):
 
 for archivo, anio in zip(archivos, anios):
     registros = json.load(open(archivo, encoding="utf-8"))
-    registros.sort(key=lambda r: (fecha_orden(r.get("fechadoc")), numero(r.get("Repertorio"))))
+    registros.sort(key=lambda r: (numero(r.get("Repertorio")), r.get("Registro") or ""))
 
     filas = []
     for r in registros:
         fojas = " ".join(x for x in [r.get("Fojas"), r.get("fojasdigito")] if x)
         # Sin la columna Nombre: incluye personas naturales y no queremos que sus nombres
         # queden buscables en Google. La vista interactiva (registro.html) sigue mostrándola.
-        celdas = [(r.get("fechadoc") or "")[:10], r.get("Registro"), fojas, r.get("Repertorio"), r.get("Materia")]
+        # Fecha "--": el campo fechadoc del sistema anterior es la fecha en que se tipeó, no la del documento
+        celdas = ["--", r.get("Registro"), fojas, r.get("Repertorio"), r.get("Materia")]
         filas.append("<tr>" + "".join(f"<td>{html.escape(str(c or ''))}</td>" for c in celdas) + "</tr>")
 
     url = f"{BASE}indice-minero-{anio}.html"
@@ -85,7 +81,7 @@ for archivo, anio in zip(archivos, anios):
   <main class="container registro-page">
     <a href="index.html#registros" class="back-link">&larr; Volver a Registros</a>
     <h1>Índice minero {anio}</h1>
-    <p class="registro-count">Conservador de Minas de Ovalle · {len(registros)} inscripciones del año {anio}, ordenadas por fecha. Para ver el nombre del titular, buscar y ordenar por columna, use la <a class="contact-link" href="registro.html?tipo=minero&amp;anio={anio}">vista interactiva</a>.</p>
+    <p class="registro-count">Conservador de Minas de Ovalle · {len(registros)} inscripciones del año {anio}, ordenadas por N° de repertorio. Para ver el nombre del titular, buscar y ordenar por columna, use la <a class="contact-link" href="registro.html?tipo=minero&amp;anio={anio}">vista interactiva</a>.</p>
     <nav class="indice-anios" aria-label="Otros años">
         {navegacion(anio)}
     </nav>

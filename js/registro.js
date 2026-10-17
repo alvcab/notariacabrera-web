@@ -107,13 +107,24 @@ document.addEventListener('DOMContentLoaded', async () => {
   let filteredRows = [];
   let currentPage = 1;
 
-  try {
-    const res = await fetch(`assets/data/${tipo}-${anio}.json`);
+  // Primero los datos en vivo del Sistema Notaría (indices.php); si no responde o no tiene ese año, el JSON guardado
+  async function cargar(url) {
+    const res = await fetch(url, { cache: 'no-store' });
     if (!res.ok) throw new Error('not found');
-    allRows = await res.json();
+    const filas = await res.json();
+    if (!Array.isArray(filas)) throw new Error('formato');
+    return filas;
+  }
+  const consulta = `tipo=${encodeURIComponent(tipo)}&anio=${encodeURIComponent(anio)}`;
+  try {
+    allRows = await cargar(`indices.php?${consulta}`);
   } catch (err) {
-    countEl.textContent = 'No se pudo cargar la información de este año todavía.';
-    return;
+    try {
+      allRows = await cargar(`assets/data/${tipo}-${anio}.json`);
+    } catch (err2) {
+      countEl.textContent = 'No se pudo cargar la información de este año todavía.';
+      return;
+    }
   }
 
   const DEFAULT_SORT_OVERRIDES = {

@@ -25,3 +25,13 @@ RewriteRule ^remuneraciones\.html$ remuneraciones.php [L]
     Header set Cache-Control "no-cache"
   </FilesMatch>
 </IfModule>
+
+# Protección del navegador: solo https, no se puede meter el sitio dentro de otra página (engaños de clic),
+# no se adivinan tipos de archivo, y no se pasa la dirección completa a otros sitios
+<IfModule mod_headers.c>
+  Header always set Strict-Transport-Security "max-age=31536000"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>

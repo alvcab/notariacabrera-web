@@ -65,7 +65,7 @@ function nombre_documento(array $f): string
       'minas' => 'Arancel Conservador de Minas',
       'notarios' => 'Arancel Notarios Públicos (enlace antiguo)',
     ],
-    'transparencia' => ['remuneraciones' => 'Remuneraciones Trabajadores'],
+    'transparencia' => ['remuneraciones' => 'Remuneraciones Trabajadores', 'declaracion-intereses' => 'Declaración de Intereses'],
     'escrito' => ['se-tenga-presente' => 'Escrito "Se tenga presente" con audio'],
   ];
   if (isset($fijos[$f['registro']])) return $fijos[$f['registro']][$f['archivo']] ?? "{$f['registro']} / {$f['archivo']}";

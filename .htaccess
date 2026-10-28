@@ -11,12 +11,15 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 # Los archivos no están en public_html, así que si esta regla fallara darían 404, nunca quedarían abiertos.
 RewriteRule ^assets/documents/(accionistas|descubrimientos|hipotecas|prohibiciones|propiedad)/([a-z0-9-]+\.pdf)$ documento.php?registro=$1&archivo=$2 [L]
 
-# Aranceles: piden iniciar sesión (ver arancel.php); los PDF de la notaría no se abren directo
+# Aranceles: públicos, pero se abren por arancel.php (anota quién los abre si tiene sesión); los PDF no se abren directo
 RewriteRule ^aranceles/(instrumentos-publicos|instrumentos-privados|minas)$ arancel.php?tipo=$1 [L]
 RewriteRule ^assets/aranceles/ - [F]
 
-# Remuneraciones se abre desde remuneraciones.php (ya no pide iniciar sesión)
+# Remuneraciones y la Declaración de Intereses piden iniciar sesión (ver remuneraciones.php y declaracion-de-intereses.php);
+# el PDF de la declaración no se abre directo
 RewriteRule ^remuneraciones\.html$ remuneraciones.php [L]
+RewriteRule ^declaracion-de-intereses\.html$ declaracion-de-intereses.php [L]
+RewriteRule ^assets/documents/declaracion-de-intereses-2026\.pdf$ - [F]
 
 # Las páginas se revisan siempre contra el servidor (si no cambiaron, el navegador usa su copia):
 # así los cambios se ven al recargar, sin tener que forzar la recarga

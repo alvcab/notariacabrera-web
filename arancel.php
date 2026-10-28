@@ -1,6 +1,6 @@
 <?php
-// Los aranceles piden iniciar sesión: /aranceles/<tipo> llega aquí (ver .htaccess) y se anota en
-// "Documentos abiertos". Son PDF en assets/aranceles/ (el .htaccess no deja abrirlos directo).
+// Los aranceles son públicos: /aranceles/<tipo> llega aquí (ver .htaccess). Si quien lo abre tiene sesión
+// iniciada, se anota en "Documentos abiertos". Son PDF en assets/aranceles/ (el .htaccess no deja abrirlos directo).
 require __DIR__ . '/cuenta/inc/app.php';
 
 const ARANCELES = [
@@ -16,16 +16,14 @@ if (!isset(ARANCELES[$tipo])) {
 }
 
 $usuario = usuario_actual();
-if (!$usuario) {
-  redirigir('/cuenta/ingresar.php?volver=' . rawurlencode("/aranceles/$tipo"));
+if ($usuario) {
+  db()->prepare('INSERT INTO descargas (usuario_id, registro, archivo, ip) VALUES (?, ?, ?, ?)')
+    ->execute([$usuario['id'], 'aranceles', $tipo, ip()]);
 }
-
-db()->prepare('INSERT INTO descargas (usuario_id, registro, archivo, ip) VALUES (?, ?, ?, ?)')
-  ->execute([$usuario['id'], 'aranceles', $tipo, ip()]);
 
 $ruta = __DIR__ . '/assets/aranceles/' . ARANCELES[$tipo];
 header('Content-Type: application/pdf');
-header('Cache-Control: private, no-store');
+header('Cache-Control: no-cache');
 header('Content-Length: ' . filesize($ruta));
 header('Content-Disposition: inline; filename="arancel-' . ARANCELES[$tipo] . '"');
 header('X-Content-Type-Options: nosniff');

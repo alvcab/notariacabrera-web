@@ -15,7 +15,7 @@ RewriteRule ^assets/documents/(accionistas|descubrimientos|hipotecas|prohibicion
 RewriteRule ^aranceles/(instrumentos-publicos|instrumentos-privados|minas)$ arancel.php?tipo=$1 [L]
 RewriteRule ^assets/aranceles/ - [F]
 
-# Remuneraciones también pide iniciar sesión (ver remuneraciones.php)
+# Remuneraciones se abre desde remuneraciones.php (ya no pide iniciar sesión)
 RewriteRule ^remuneraciones\.html$ remuneraciones.php [L]
 
 # Las páginas se revisan siempre contra el servidor (si no cambiaron, el navegador usa su copia):

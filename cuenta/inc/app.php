@@ -267,7 +267,7 @@ function cabecera(string $titulo): void
   <link rel="icon" type="image/png" href="/assets/logo-verde.png">
   <link rel="stylesheet" href="/css/style.css?v=93">
   <link rel="stylesheet" href="/css/registro.css?v=11">
-  <link rel="stylesheet" href="/css/cuenta.css?v=4">
+  <link rel="stylesheet" href="/css/cuenta.css?v=5">
 </head>
 <body>
   <header class="site-header">

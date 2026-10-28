@@ -259,6 +259,11 @@
 }
 
 /* Escrito con audio (escrito.php): el reproductor queda fijo arriba mientras se lee */
+/* El texto se lee más ancho que las demás páginas de cuenta; el reproductor mantiene su ancho */
+.cuenta-page:has(.escrito) {
+  max-width: 900px;
+}
+
 .escrito-audio {
   position: sticky;
   top: 71px; /* debajo de la barra superior, que también queda fija */
@@ -277,10 +282,13 @@
 
 .escrito-audio audio {
   width: 100%;
+  max-width: 560px;
 }
 
-.escrito-texto p {
+.escrito .escrito-texto p {
   text-align: justify;
+  hyphens: auto;
+  line-height: 1.7;
 }
 
 .escrito .minuto {

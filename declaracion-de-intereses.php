@@ -36,7 +36,7 @@ header('X-Robots-Tag: noindex');
   <meta name="description" content="Declaración de intereses del notario Rodrigo Cabrera Albarrán, Segunda Notaría Pública y Conservador de Minas de Ovalle. Información de transparencia.">
   <link rel="canonical" href="https://notariacabrera.cl/declaracion-de-intereses.html">
   <link rel="icon" type="image/png" href="assets/logo-verde.png">
-  <link rel="stylesheet" href="css/style.css?v=93">
+  <link rel="stylesheet" href="css/style.css?v=94">
   <link rel="stylesheet" href="css/registro.css?v=11">
   <style>
     .pdf-frame {

@@ -265,7 +265,7 @@ function cabecera(string $titulo): void
   <meta name="robots" content="noindex">
   <title><?= e($titulo) ?> — Notaría Cabrera, Segunda Notaría de Ovalle</title>
   <link rel="icon" type="image/png" href="/assets/logo-verde.png">
-  <link rel="stylesheet" href="/css/style.css?v=93">
+  <link rel="stylesheet" href="/css/style.css?v=94">
   <link rel="stylesheet" href="/css/registro.css?v=11">
   <link rel="stylesheet" href="/css/cuenta.css?v=6">
 </head>

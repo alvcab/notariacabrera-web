@@ -23,7 +23,7 @@ header('X-Robots-Tag: noindex');
   <meta name="description" content="Remuneraciones del personal de la Segunda Notaría Pública y Conservador de Minas de Ovalle, Notaría Cabrera. Información de transparencia.">
   <link rel="canonical" href="https://notariacabrera.cl/remuneraciones.html">
   <link rel="icon" type="image/png" href="assets/logo-verde.png">
-  <link rel="stylesheet" href="css/style.css?v=93">
+  <link rel="stylesheet" href="css/style.css?v=94">
   <link rel="stylesheet" href="css/registro.css?v=11">
 </head>
 <body>

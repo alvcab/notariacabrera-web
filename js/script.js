@@ -152,16 +152,56 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('load', centrar, { once: true });
   }
 
-  document.querySelectorAll('.back-link[data-close-tab]').forEach((link) => {
+  // Enlaces «Volver»: regresan a la página anterior del sitio tal como se dejó (misma posición y
+  // acordeones abiertos), sin recargarla desde arriba.
+  //  - Página abierta en otra pestaña desde el sitio (data-close-tab): cierra esa pestaña.
+  //  - Si se llegó desde otra página de este sitio: vuelve atrás en el historial (salvo que esa
+  //    página sea la de ingresar con clave, para no volver al formulario).
+  //  - Si no (por ejemplo, se entró directo desde Google): va al enlace, que apunta a la sección
+  //    o al trámite correspondiente, no al comienzo de la página.
+  document.querySelectorAll('.back-link').forEach((link) => {
     link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const fallbackHref = link.getAttribute('href');
-      window.close();
-      setTimeout(() => {
-        window.location.href = fallbackHref;
-      }, 300);
+      const destino = new URL(link.getAttribute('href'), location.href);
+      let anterior = null;
+      try { anterior = document.referrer ? new URL(document.referrer) : null; } catch (_) { anterior = null; }
+      const vieneDelSitio = anterior && anterior.origin === location.origin &&
+        !/^\/(cuenta\/|documento\.php)/.test(anterior.pathname);
+
+      if (link.hasAttribute('data-close-tab') && history.length <= 1) {
+        e.preventDefault();
+        window.close();
+        setTimeout(() => { window.location.href = destino.href; }, 300);
+      } else if (vieneDelSitio && history.length > 1) {
+        e.preventDefault();
+        history.back();
+      }
     });
   });
+
+  // Si la dirección apunta a un acordeón (por ejemplo tramites.html#finiquitos), abrirlo y centrarlo
+  const acordeonPedido = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+  if (acordeonPedido && acordeonPedido.tagName === 'DETAILS') {
+    acordeonPedido.open = true;
+    const centrarAcordeon = () => acordeonPedido.scrollIntoView({ block: 'center', behavior: 'instant' });
+    centrarAcordeon();
+    window.addEventListener('load', centrarAcordeon, { once: true });
+  }
+
+  // Acordeones (Trámites y preguntas frecuentes): recuerda cuáles estaban abiertos, para que al
+  // volver a la página se vean igual aunque el navegador la haya recargado.
+  const acordeones = document.querySelectorAll('.accordion details');
+  if (acordeones.length) {
+    const clave = 'abiertos:' + location.pathname;
+    try {
+      const abiertos = JSON.parse(sessionStorage.getItem(clave) || '[]');
+      abiertos.forEach((i) => { if (acordeones[i]) acordeones[i].open = true; });
+    } catch (_) { /* sin almacenamiento: se ven cerrados, como siempre */ }
+    const guardar = () => {
+      const abiertos = [...acordeones].map((d, i) => (d.open ? i : -1)).filter((i) => i >= 0);
+      try { sessionStorage.setItem(clave, JSON.stringify(abiertos)); } catch (_) { /* nada */ }
+    };
+    acordeones.forEach((d) => d.addEventListener('toggle', guardar));
+  }
 });
 
 // ── Notaría de turno ────────────────────────────────────────────────────

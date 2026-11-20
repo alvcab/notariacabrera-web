@@ -1335,3 +1335,19 @@ html.oscurece :is(.map-section, #_) {
 html.oscurece #inicio {
   --bg: #0f1913;
 }
+
+/* Botón todavía sin contenido (Balance Anual): no lleva a ninguna parte y muestra «Próximamente» */
+.resource-link[aria-disabled="true"] {
+  gap: 0.5rem;
+  cursor: default;
+}
+
+.proximamente {
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background-color: rgba(255, 183, 120, 0.16);
+  color: #ffb778;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}

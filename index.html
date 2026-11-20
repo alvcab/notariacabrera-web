@@ -63,7 +63,7 @@
   </script>
   <link rel="icon" type="image/png" href="assets/logo-verde.png">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="stylesheet" href="css/style.css?v=94">
+  <link rel="stylesheet" href="css/style.css?v=95">
   <script>
     // Oculta las secciones antes del primer pintado para que aparezcan con fundido al bajar.
     // Si js/script.js no llega a correr, a los 2,5 s se muestran normal.
@@ -146,6 +146,17 @@
         </div>
       </div>
       <p class="note note-highlight">Para todo trámite se debe presentar cédula de identidad o pasaporte vigente.</p>
+      <h3>Trámites más consultados</h3>
+      <div class="links-grid">
+        <a href="escrituras-publicas.html" class="resource-link">Escrituras públicas</a>
+        <a href="poderes-notariales.html" class="resource-link">Poderes notariales</a>
+        <a href="transferencia-de-vehiculos.html" class="resource-link">Transferencia de vehículos</a>
+        <a href="autorizacion-de-firmas.html" class="resource-link">Autorización de firmas</a>
+        <a href="declaraciones-juradas.html" class="resource-link">Declaraciones juradas</a>
+        <a href="permiso-de-viaje-menores.html" class="resource-link">Permiso de viaje para menores</a>
+        <a href="finiquitos.html" class="resource-link">Finiquitos</a>
+        <a href="conservador-de-minas.html" class="resource-link">Conservador de Minas</a>
+      </div>
       <a href="tramites.html" id="ver-tramites" class="resource-link funciones-button boton-ancho">Ver trámites y preguntas frecuentes</a>
     </section>
 
@@ -207,7 +218,7 @@
         <a href="informe-fiscalizacion.html" target="_blank" class="resource-link">Informes de Fiscalización</a>
         <a href="declaracion-de-intereses.html" target="_blank" class="resource-link">Declaración de Intereses</a>
         <a href="remuneraciones.html" target="_blank" class="resource-link">Remuneraciones Trabajadores</a>
-        <a href="#" class="resource-link">Balance Anual</a>
+        <a class="resource-link" aria-disabled="true">Balance Anual <span class="proximamente">Próximamente</span></a>
       </div>
 
       <h3>Aranceles</h3>
@@ -295,6 +306,6 @@
   </footer>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="js/script.js?v=54"></script>
+  <script src="js/script.js?v=57"></script>
 </body>
 </html>

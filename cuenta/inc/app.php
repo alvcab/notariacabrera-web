@@ -265,7 +265,7 @@ function cabecera(string $titulo): void
   <meta name="robots" content="noindex">
   <title><?= e($titulo) ?> — Notaría Cabrera, Segunda Notaría de Ovalle</title>
   <link rel="icon" type="image/png" href="/assets/logo-verde.png">
-  <link rel="stylesheet" href="/css/style.css?v=94">
+  <link rel="stylesheet" href="/css/style.css?v=95">
   <link rel="stylesheet" href="/css/registro.css?v=11">
   <link rel="stylesheet" href="/css/cuenta.css?v=6">
 </head>
@@ -283,7 +283,7 @@ function cabecera(string $titulo): void
   </header>
 
   <main class="container article-page cuenta-page">
-    <a href="/index.html" class="back-link" data-close-tab>&larr; Volver a Notaría Cabrera</a>
+    <a href="/index.html#recursos" class="back-link" data-close-tab>&larr; Volver a Notaría Cabrera</a>
   <?php
 }
 
@@ -298,7 +298,7 @@ function pie(): void
     </div>
   </footer>
 
-  <script src="/js/script.js?v=54"></script>
+  <script src="/js/script.js?v=57"></script>
 </body>
 </html>
   <?php

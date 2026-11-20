@@ -18,6 +18,11 @@
       margin-top: 0.75rem;
     }
 
+    /* Esta página va 600 px más ancha que las demás (900 px), para leer mejor los PDF */
+    main.article-page {
+      max-width: 1500px;
+    }
+
     .informe-pestanas {
       display: flex;
       flex-wrap: wrap;
@@ -75,9 +80,15 @@
     <p class="registro-count">Informes de las visitas de inspección de la Fiscalía Judicial de la Corte de Apelaciones de La Serena, del más reciente al más antiguo.</p>
 
     <div class="informe-pestanas" role="tablist">
-      <button type="button" role="tab" class="informe-pestana" data-informe="abril-junio-2026" aria-selected="true">2.º informe<span>abril a junio 2026</span></button>
+      <button type="button" role="tab" class="informe-pestana" data-informe="julio-septiembre-2026" aria-selected="true">3.er informe<span>julio a septiembre 2026</span></button>
+      <button type="button" role="tab" class="informe-pestana" data-informe="abril-junio-2026" aria-selected="false">2.º informe<span>abril a junio 2026</span></button>
       <button type="button" role="tab" class="informe-pestana" data-informe="enero-marzo-2026" aria-selected="false">1.er informe<span>enero a marzo 2026</span></button>
     </div>
+
+    <section class="informe-panel" id="julio-septiembre-2026" role="tabpanel">
+      <p class="informe-datos">Visita del 28 de octubre de 2026 · <a href="assets/documents/informe-fiscalizacion-2026-julio-septiembre.pdf" target="_blank" rel="noopener" class="contact-link">Abrir PDF en otra pestaña</a></p>
+      <embed src="assets/documents/informe-fiscalizacion-2026-julio-septiembre.pdf" type="application/pdf" class="pdf-frame">
+    </section>
 
     <section class="informe-panel" id="abril-junio-2026" role="tabpanel">
       <p class="informe-datos">Visita del 25 de agosto de 2026 · <a href="assets/documents/informe-fiscalizacion-2026-abril-junio.pdf" target="_blank" rel="noopener" class="contact-link">Abrir PDF en otra pestaña</a></p>
